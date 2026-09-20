@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('slug')->unique();
             $table->string('description');
             $table->string('excerpt');
+            $table->json('features')->nullable(); // ex:{feature1, feature2}
             // in the screenshot should i create a another table or should i make it as a json {path:......, ........}
             $table->json('screenshots')->nullable();
             $table->boolean('is_published')->default(false);
