@@ -4,16 +4,16 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-use App\Models\Screenshot;
 use App\Http\Requests\StoreScreenshotRequest;
 use App\Http\Requests\UpdateScreenshotRequest;
+use App\Models\Screenshot;
 
 class ScreenshotController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(): void
     {
         //
     }
@@ -21,7 +21,7 @@ class ScreenshotController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(): void
     {
         //
     }
@@ -29,7 +29,7 @@ class ScreenshotController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreScreenshotRequest $request)
+    public function store(StoreScreenshotRequest $request): void
     {
         //
     }
@@ -37,7 +37,7 @@ class ScreenshotController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Screenshot $screenshot)
+    public function show(Screenshot $screenshot): void
     {
         //
     }
@@ -45,7 +45,7 @@ class ScreenshotController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Screenshot $screenshot)
+    public function edit(Screenshot $screenshot): void
     {
         //
     }
@@ -53,7 +53,7 @@ class ScreenshotController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateScreenshotRequest $request, Screenshot $screenshot)
+    public function update(UpdateScreenshotRequest $request, Screenshot $screenshot): void
     {
         //
     }
@@ -61,7 +61,7 @@ class ScreenshotController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Screenshot $screenshot)
+    public function destroy(Screenshot $screenshot): void
     {
         //
     }

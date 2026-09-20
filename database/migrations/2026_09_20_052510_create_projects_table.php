@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('slug')->unique();
             $table->string('description');
             $table->string('excerpt');
-            //in the screenshot should i create a another table or should i make it as a json {path:......, ........}
+            // in the screenshot should i create a another table or should i make it as a json {path:......, ........}
             $table->json('screenshots')->nullable();
             $table->boolean('is_published')->default(false);
             $table->timestamp('published_at');

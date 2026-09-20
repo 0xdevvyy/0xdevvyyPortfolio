@@ -62,6 +62,17 @@
         "lint:check": [
             "pint --parallel --test"
         ],
+        "rector": [
+            "vendor/bin/rector"
+        ],
+       "fix": [
+            "npm run format",
+            "npm run check:fix",
+            "@rector",
+            "@lint",
+            "@types:check",
+            "@php artisan test"
+        ],
         "ci:check": [
             "Composer\\Config::disableProcessTimeout",
             "npm run check",

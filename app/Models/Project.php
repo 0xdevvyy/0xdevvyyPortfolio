@@ -18,24 +18,27 @@ class Project extends Model
     /**
      * @return BelongsTo<User, $this>
      */
-    public function user(): BelongsTo {
-            return $this->belongsTo(User::class);
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
     }
 
     /**
      * @return HasMany<Tag, $this>
      */
-    public function tags(): HasMany {
+    public function tags(): HasMany
+    {
         return $this->hasMany(Tag::class);
     }
-
 
     /**
      * @return HasMany<Screenshot, $this>
      */
-    public function screenshots(): HasMany {
+    public function screenshots(): HasMany
+    {
         return $this->hasMany(Screenshot::class);
     }
+
     protected function casts(): array
     {
         return [
