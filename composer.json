@@ -16,7 +16,9 @@
         "laravel/wayfinder": "^0.1.14"
     },
     "require-dev": {
+        "driftingly/rector-laravel": "^2.6",
         "fakerphp/faker": "^1.24",
+        "fruitcake/laravel-debugbar": "^4.4",
         "larastan/larastan": "^3.9",
         "laravel/boost": "^2.2",
         "laravel/pail": "^1.2.5",
@@ -26,7 +28,8 @@
         "mockery/mockery": "^1.6",
         "nunomaduro/collision": "^8.9.3",
         "pestphp/pest": "^5.2",
-        "pestphp/pest-plugin-laravel": "^5.0"
+        "pestphp/pest-plugin-laravel": "^5.0",
+        "rector/rector": "^2.6"
     },
     "autoload": {
         "psr-4": {
@@ -58,6 +61,17 @@
         ],
         "lint:check": [
             "pint --parallel --test"
+        ],
+        "rector": [
+            "vendor/bin/rector"
+        ],
+       "fix": [
+            "npm run format",
+            "npm run check:fix",
+            "@rector",
+            "@lint",
+            "@types:check",
+            "@php artisan test"
         ],
         "ci:check": [
             "Composer\\Config::disableProcessTimeout",
