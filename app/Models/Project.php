@@ -1,8 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Casts\AsArrayObject;
+use Database\Factories\ProjectFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -10,13 +12,8 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Project extends Model
 {
-    /** @use HasFactory<\Database\Factories\ProjectFactory> */
+    /** @use HasFactory<ProjectFactory> */
     use HasFactory;
-
-
-    protected $casts = [
-        'published_at' => 'datetime',
-    ];
 
     /**
      * @return BelongsTo<User, $this>
@@ -38,5 +35,11 @@ class Project extends Model
      */
     public function screenshots(): HasMany {
         return $this->hasMany(Screenshot::class);
+    }
+    protected function casts(): array
+    {
+        return [
+            'published_at' => 'datetime',
+        ];
     }
 }

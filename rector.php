@@ -3,19 +3,39 @@
 declare(strict_types=1);
 
 use Rector\Config\RectorConfig;
+use Rector\Naming\Rector\Assign\RenameVariableToMatchMethodCallReturnTypeRector;
+use Rector\TypeDeclaration\Rector\ClassMethod\ReturnTypeFromStrictTypedPropertyRector;
+use Rector\TypeDeclaration\Rector\Closure\AddClosureVoidReturnTypeWhereNoReturnRector;
+use Rector\TypeDeclaration\Rector\Closure\ClosureReturnTypeRector;
+use Rector\TypeDeclaration\Rector\FunctionLike\AddReturnTypeDeclarationFromYieldsRector;
+use Rector\TypeDeclaration\Rector\StmtsAwareInterface\DeclareStrictTypesRector;
+// use RectorLaravel\Set\LaravelSetProvider;
 
 return RectorConfig::configure()
     ->withPaths([
-        __DIR__ . '/app',
-        __DIR__ . '/bootstrap',
-        __DIR__ . '/config',
-        __DIR__ . '/public',
-        __DIR__ . '/resources',
-        __DIR__ . '/routes',
-        __DIR__ . '/tests',
+        __DIR__.'/app',
+        __DIR__.'/bootstrap',
+        __DIR__.'/config',
+        __DIR__.'/public',
+        __DIR__.'/resources',
+        __DIR__.'/routes',
+        __DIR__.'/tests',
     ])
-    // uncomment to reach your current PHP version
-    // ->withPhpSets()
-    ->withTypeCoverageLevel(0)
-    ->withDeadCodeLevel(0)
-    ->withCodeQualityLevel(0);
+    ->withSkip([
+        __DIR__.'/bootstrap/cache',
+        __DIR__.'/storage',
+        __DIR__.'/vendor',
+    ])
+    ->withComposerBased(laravel: true,)
+    ->withImportNames()
+    ->withAttributesSets()
+    ->withPhpSets()
+    ->withRules([
+        DeclareStrictTypesRector::class,
+        ReturnTypeFromStrictTypedPropertyRector::class,
+        RenameVariableToMatchMethodCallReturnTypeRector::class,
+        AddReturnTypeDeclarationFromYieldsRector::class,
+        AddClosureVoidReturnTypeWhereNoReturnRector::class,
+        ClosureReturnTypeRector::class,
+        
+    ]);
