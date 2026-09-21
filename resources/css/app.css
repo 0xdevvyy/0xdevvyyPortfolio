@@ -3,9 +3,410 @@
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 @source '../../storage/framework/views/*.php';
 
+/*
+ * =========================================================
+ * Doodle Notebook Pallete
+ * =========================================================
+ *
+ * Paper
+ * #F4EFDF  #FAF7EC  #E8DFC9
+ *
+ * Ink / Navy
+ * #173B5C  #102D47  #2B5273
+ *
+ * Sage
+ * #71866A  #596B54  #8FA086
+ *
+ * Vintage Gold
+ * #D8AE4F  #B58D35  #E4C56A
+ *
+ * Supporting
+ * #C86B52  #8B8A82
+ */
+
 @theme inline {
+    /*
+     * =====================================================
+     * FONTS
+     * =====================================================
+     */
+
     --font-sans:
-        Instrument Sans, ui-sans-serif, system-ui, sans-serif,
-        'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
-        'Noto Color Emoji';
+        "DM Mono", "Courier New", monospace;
+
+    --font-heading:
+        "Bree Serif", Georgia, serif;
+
+    --font-body:
+        "DM Mono", "Courier New", monospace;
+
+    --font-doodle:
+        "Caveat", cursive;
+
+    /*
+     * =====================================================
+     * RADII
+     * =====================================================
+     */
+
+    --radius-lg: var(--radius);
+    --radius-md: calc(var(--radius) - 2px);
+    --radius-sm: calc(var(--radius) - 4px);
+
+    /*
+     * =====================================================
+     * SEMANTIC COLORS
+     * =====================================================
+     */
+
+    --color-background: var(--background);
+    --color-foreground: var(--foreground);
+
+    --color-card: var(--card);
+    --color-card-foreground: var(--card-foreground);
+
+    --color-popover: var(--popover);
+    --color-popover-foreground: var(--popover-foreground);
+
+    --color-primary: var(--primary);
+    --color-primary-foreground: var(--primary-foreground);
+
+    --color-secondary: var(--secondary);
+    --color-secondary-foreground: var(--secondary-foreground);
+
+    --color-muted: var(--muted);
+    --color-muted-foreground: var(--muted-foreground);
+
+    --color-accent: var(--accent);
+    --color-accent-foreground: var(--accent-foreground);
+
+    --color-destructive: var(--destructive);
+    --color-destructive-foreground: var(--destructive-foreground);
+
+    --color-border: var(--border);
+    --color-input: var(--input);
+    --color-ring: var(--ring);
+
+    /*
+     * =====================================================
+     * CHARTS
+     * =====================================================
+     */
+
+    --color-chart-1: var(--chart-1);
+    --color-chart-2: var(--chart-2);
+    --color-chart-3: var(--chart-3);
+    --color-chart-4: var(--chart-4);
+    --color-chart-5: var(--chart-5);
+
+    /*
+     * =====================================================
+     * SIDEBAR
+     * =====================================================
+     */
+
+    --color-sidebar: var(--sidebar-background);
+    --color-sidebar-foreground: var(--sidebar-foreground);
+
+    --color-sidebar-primary: var(--sidebar-primary);
+    --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+
+    --color-sidebar-accent: var(--sidebar-accent);
+    --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+
+    --color-sidebar-border: var(--sidebar-border);
+    --color-sidebar-ring: var(--sidebar-ring);
+
+    /*
+     * =====================================================
+     * CUSTOM PALETTE COLORS
+     * =====================================================
+     */
+
+    --color-paper: var(--paper);
+    --color-paper-light: var(--paper-light);
+    --color-paper-dark: var(--paper-dark);
+
+    --color-ink: var(--ink);
+    --color-ink-dark: var(--ink-dark);
+    --color-ink-soft: var(--ink-soft);
+
+    --color-sage: var(--sage);
+    --color-sage-dark: var(--sage-dark);
+    --color-sage-light: var(--sage-light);
+
+    --color-gold: var(--gold);
+    --color-gold-dark: var(--gold-dark);
+    --color-gold-light: var(--gold-light);
+
+    --color-red: var(--red);
+    --color-pencil: var(--pencil);
+}
+
+@layer base {
+    *,
+    ::after,
+    ::before,
+    ::backdrop,
+    ::file-selector-button {
+        border-color: var(--color-border);
+    }
+
+    html {
+        font-family: var(--font-body);
+    }
+
+    body {
+        @apply bg-background text-foreground;
+    }
+}
+
+/*
+ * =========================================================
+ * LIGHT / EDITORIAL THEME
+ * =========================================================
+ */
+
+:root,
+.light {
+    --radius: 0.5rem;
+
+    /*
+     * =====================================================
+     * BACKGROUND
+     * =====================================================
+     *
+     * Warm paper instead of pure white.
+     */
+
+    --background: #F4EFDF;
+    --foreground: #173B5C;
+
+    /*
+     * =====================================================
+     * CARDS
+     * =====================================================
+     *
+     * Slightly lighter than the page background.
+     */
+
+    --card: #FAF7EC;
+    --card-foreground: #173B5C;
+
+    /*
+     * =====================================================
+     * POPOVERS
+     * =====================================================
+     */
+
+    --popover: #FAF7EC;
+    --popover-foreground: #173B5C;
+
+    /*
+     * =====================================================
+     * PRIMARY
+     * =====================================================
+     *
+     * Deep editorial navy.
+     *
+     * Buttons
+     * Headings
+     * Navigation
+     * Important UI
+     */
+
+    --primary: #173B5C;
+    --primary-foreground: #F4EFDF;
+
+    /*
+     * =====================================================
+     * SECONDARY
+     * =====================================================
+     *
+     * Muted sage.
+     *
+     * Secondary actions
+     * Supporting UI
+     * Tags
+     * Decorative elements
+     */
+
+    --secondary: #71866A;
+    --secondary-foreground: #FAF7EC;
+
+    /*
+     * =====================================================
+     * MUTED
+     * =====================================================
+     *
+     * Warm paper shadow / supporting surfaces.
+     */
+
+    --muted: #E8DFC9;
+    --muted-foreground: #42566A;
+
+    /*
+     * =====================================================
+     * ACCENT
+     * =====================================================
+     *
+     * Vintage gold.
+     *
+     * Highlights
+     * CTAs
+     * Active states
+     * Decorative details
+     */
+
+    --accent: #D8AE4F;
+    --accent-foreground: #173B5C;
+
+    /*
+     * =====================================================
+     * DESTRUCTIVE
+     * =====================================================
+     */
+
+    --destructive: #C86B52;
+    --destructive-foreground: #FAF7EC;
+
+    /*
+     * =====================================================
+     * BORDERS / INPUTS
+     * =====================================================
+     */
+
+    --border: #CFC5AE;
+    --input: #CFC5AE;
+
+    /*
+     * =====================================================
+     * FOCUS RING
+     * =====================================================
+     */
+
+    --ring: #D8AE4F;
+
+    /*
+     * =====================================================
+     * CHARTS
+     * =====================================================
+     */
+
+    --chart-1: #173B5C;
+    --chart-2: #71866A;
+    --chart-3: #D8AE4F;
+    --chart-4: #C86B52;
+    --chart-5: #2B5273;
+
+    /*
+     * =====================================================
+     * SIDEBAR
+     * =====================================================
+     *
+     * Dark editorial sidebar.
+     */
+
+    --sidebar-background: #102D47;
+    --sidebar-foreground: #F4EFDF;
+
+    --sidebar-primary: #D8AE4F;
+    --sidebar-primary-foreground: #173B5C;
+
+    --sidebar-accent: #173B5C;
+    --sidebar-accent-foreground: #E4C56A;
+
+    --sidebar-border: #2B5273;
+    --sidebar-ring: #D8AE4F;
+
+    --sidebar: #102D47;
+
+    /*
+     * =====================================================
+     * CUSTOM PALETTE
+     * =====================================================
+     */
+
+    /* Paper */
+    --paper: #F4EFDF;
+    --paper-light: #FAF7EC;
+    --paper-dark: #E8DFC9;
+
+    /* Ink */
+    --ink: #173B5C;
+    --ink-dark: #102D47;
+    --ink-soft: #42566A;
+
+    /* Sage */
+    --sage: #71866A;
+    --sage-dark: #596B54;
+    --sage-light: #8FA086;
+
+    /* Gold */
+    --gold: #D8AE4F;
+    --gold-dark: #B58D35;
+    --gold-light: #E4C56A;
+
+    /* Supporting */
+    --red: #C86B52;
+    --pencil: #8B8A82;
+}
+
+/*
+ * =========================================================
+ * UTILITIES
+ * =========================================================
+ */
+
+@utility hover-bounce {
+    transition:
+        transform 200ms ease,
+        box-shadow 200ms ease,
+        border-color 200ms ease;
+
+    &:hover {
+        transform: translateY(-0.25rem);
+
+        border-color: color-mix(
+            in oklab,
+            var(--accent) 60%,
+            transparent
+        );
+
+        box-shadow:
+            0 20px 25px -5px
+                color-mix(in oklab, var(--ink) 8%, transparent),
+            0 8px 10px -6px
+                color-mix(in oklab, var(--ink) 8%, transparent);
+    }
+}
+
+/*
+ * =========================================================
+ * FORM COMPONENTS
+ * =========================================================
+ */
+
+.form-label {
+    @apply mb-2 block text-sm font-semibold;
+}
+
+.input-wrapper {
+    @apply relative flex items-center;
+}
+
+.input-icon {
+    @apply pointer-events-none absolute left-4 size-5 text-muted-foreground;
+}
+
+.form-input {
+    @apply h-12 w-full rounded-lg border border-border bg-card pr-10 pl-11 text-sm text-foreground transition-all outline-none placeholder:text-muted-foreground/70 focus:border-accent focus:ring-2 focus:ring-accent/20;
+}
+
+.form-input.standalone {
+    @apply px-4;
+}
+
+.info-alert {
+    @apply mt-6 flex items-start gap-3 rounded-lg border border-secondary/30 bg-secondary/5 p-4 text-sm text-muted-foreground;
 }
