@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { Link, usePage } from '@inertiajs/vue3'
-import Line from '../lines/Line.vue'
+import Line from '../svg/Line.vue'
 
 defineProps<{
-    url: string
+    url?: string
     label: string
     // active?: boolean
 }>()
@@ -14,7 +14,7 @@ const page = usePage()
 <template>
     <Link
         :href="url"
-        class="group relative inline-block font-doodle px-4 py-2"
+        class="group relative inline-block font-doodle px-2"
     >
         {{ label }}
 

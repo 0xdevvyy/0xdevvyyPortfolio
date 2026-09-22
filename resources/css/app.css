@@ -1,7 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Kalam:wght@300;400;700&family=Permanent+Marker&display=swap');
 @import 'tailwindcss';
 
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 @source '../../storage/framework/views/*.php';
+
 
 /*
  * =========================================================
@@ -42,6 +44,9 @@
 
     --font-doodle:
         "Caveat", cursive;
+
+    --font-hand: "Kalam", cursive;
+    --font-display: "Permanent Marker", cursive;
 
     /*
      * =====================================================
