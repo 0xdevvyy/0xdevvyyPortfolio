@@ -4,7 +4,6 @@
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 @source '../../storage/framework/views/*.php';
 
-
 /*
  * =========================================================
  * Doodle Notebook Pallete
@@ -33,20 +32,16 @@
      * =====================================================
      */
 
-    --font-sans:
-        "DM Mono", "Courier New", monospace;
+    --font-sans: 'DM Mono', 'Courier New', monospace;
 
-    --font-heading:
-        "Bree Serif", Georgia, serif;
+    --font-heading: 'Bree Serif', Georgia, serif;
 
-    --font-body:
-        "DM Mono", "Courier New", monospace;
+    --font-body: 'DM Mono', 'Courier New', monospace;
 
-    --font-doodle:
-        "Caveat", cursive;
+    --font-doodle: 'Caveat', cursive;
 
-    --font-hand: "Kalam", cursive;
-    --font-display: "Permanent Marker", cursive;
+    --font-hand: 'Kalam', cursive;
+    --font-display: 'Permanent Marker', cursive;
 
     /*
      * =====================================================
@@ -184,8 +179,8 @@
      * Warm paper instead of pure white.
      */
 
-    --background: #F4EFDF;
-    --foreground: #173B5C;
+    --background: #f4efdf;
+    --foreground: #173b5c;
 
     /*
      * =====================================================
@@ -195,8 +190,8 @@
      * Slightly lighter than the page background.
      */
 
-    --card: #FAF7EC;
-    --card-foreground: #173B5C;
+    --card: #faf7ec;
+    --card-foreground: #173b5c;
 
     /*
      * =====================================================
@@ -204,8 +199,8 @@
      * =====================================================
      */
 
-    --popover: #FAF7EC;
-    --popover-foreground: #173B5C;
+    --popover: #faf7ec;
+    --popover-foreground: #173b5c;
 
     /*
      * =====================================================
@@ -220,8 +215,8 @@
      * Important UI
      */
 
-    --primary: #173B5C;
-    --primary-foreground: #F4EFDF;
+    --primary: #173b5c;
+    --primary-foreground: #f4efdf;
 
     /*
      * =====================================================
@@ -236,8 +231,8 @@
      * Decorative elements
      */
 
-    --secondary: #71866A;
-    --secondary-foreground: #FAF7EC;
+    --secondary: #71866a;
+    --secondary-foreground: #faf7ec;
 
     /*
      * =====================================================
@@ -247,8 +242,8 @@
      * Warm paper shadow / supporting surfaces.
      */
 
-    --muted: #E8DFC9;
-    --muted-foreground: #42566A;
+    --muted: #e8dfc9;
+    --muted-foreground: #42566a;
 
     /*
      * =====================================================
@@ -263,8 +258,8 @@
      * Decorative details
      */
 
-    --accent: #D8AE4F;
-    --accent-foreground: #173B5C;
+    --accent: #d8ae4f;
+    --accent-foreground: #173b5c;
 
     /*
      * =====================================================
@@ -272,8 +267,8 @@
      * =====================================================
      */
 
-    --destructive: #C86B52;
-    --destructive-foreground: #FAF7EC;
+    --destructive: #c86b52;
+    --destructive-foreground: #faf7ec;
 
     /*
      * =====================================================
@@ -281,8 +276,8 @@
      * =====================================================
      */
 
-    --border: #CFC5AE;
-    --input: #CFC5AE;
+    --border: #cfc5ae;
+    --input: #cfc5ae;
 
     /*
      * =====================================================
@@ -290,7 +285,7 @@
      * =====================================================
      */
 
-    --ring: #D8AE4F;
+    --ring: #d8ae4f;
 
     /*
      * =====================================================
@@ -298,11 +293,11 @@
      * =====================================================
      */
 
-    --chart-1: #173B5C;
-    --chart-2: #71866A;
-    --chart-3: #D8AE4F;
-    --chart-4: #C86B52;
-    --chart-5: #2B5273;
+    --chart-1: #173b5c;
+    --chart-2: #71866a;
+    --chart-3: #d8ae4f;
+    --chart-4: #c86b52;
+    --chart-5: #2b5273;
 
     /*
      * =====================================================
@@ -312,19 +307,19 @@
      * Dark editorial sidebar.
      */
 
-    --sidebar-background: #102D47;
-    --sidebar-foreground: #F4EFDF;
+    --sidebar-background: #102d47;
+    --sidebar-foreground: #f4efdf;
 
-    --sidebar-primary: #D8AE4F;
-    --sidebar-primary-foreground: #173B5C;
+    --sidebar-primary: #d8ae4f;
+    --sidebar-primary-foreground: #173b5c;
 
-    --sidebar-accent: #173B5C;
-    --sidebar-accent-foreground: #E4C56A;
+    --sidebar-accent: #173b5c;
+    --sidebar-accent-foreground: #e4c56a;
 
-    --sidebar-border: #2B5273;
-    --sidebar-ring: #D8AE4F;
+    --sidebar-border: #2b5273;
+    --sidebar-ring: #d8ae4f;
 
-    --sidebar: #102D47;
+    --sidebar: #102d47;
 
     /*
      * =====================================================
@@ -333,28 +328,28 @@
      */
 
     /* Paper */
-    --paper: #F4EFDF;
-    --paper-light: #FAF7EC;
-    --paper-dark: #E8DFC9;
+    --paper: #f4efdf;
+    --paper-light: #faf7ec;
+    --paper-dark: #e8dfc9;
 
     /* Ink */
-    --ink: #173B5C;
-    --ink-dark: #102D47;
-    --ink-soft: #42566A;
+    --ink: #173b5c;
+    --ink-dark: #102d47;
+    --ink-soft: #42566a;
 
     /* Sage */
-    --sage: #71866A;
-    --sage-dark: #596B54;
-    --sage-light: #8FA086;
+    --sage: #71866a;
+    --sage-dark: #596b54;
+    --sage-light: #8fa086;
 
     /* Gold */
-    --gold: #D8AE4F;
-    --gold-dark: #B58D35;
-    --gold-light: #E4C56A;
+    --gold: #d8ae4f;
+    --gold-dark: #b58d35;
+    --gold-light: #e4c56a;
 
     /* Supporting */
-    --red: #C86B52;
-    --pencil: #8B8A82;
+    --red: #c86b52;
+    --pencil: #8b8a82;
 }
 
 /*
@@ -372,17 +367,11 @@
     &:hover {
         transform: translateY(-0.25rem);
 
-        border-color: color-mix(
-            in oklab,
-            var(--accent) 60%,
-            transparent
-        );
+        border-color: color-mix(in oklab, var(--accent) 60%, transparent);
 
         box-shadow:
-            0 20px 25px -5px
-                color-mix(in oklab, var(--ink) 8%, transparent),
-            0 8px 10px -6px
-                color-mix(in oklab, var(--ink) 8%, transparent);
+            0 20px 25px -5px color-mix(in oklab, var(--ink) 8%, transparent),
+            0 8px 10px -6px color-mix(in oklab, var(--ink) 8%, transparent);
     }
 }
 
@@ -401,11 +390,11 @@
 }
 
 .input-icon {
-    @apply pointer-events-none absolute left-4 size-5 text-muted-foreground;
+    @apply text-muted-foreground pointer-events-none absolute left-4 size-5;
 }
 
 .form-input {
-    @apply h-12 w-full rounded-lg border border-border bg-card pr-10 pl-11 text-sm text-foreground transition-all outline-none placeholder:text-muted-foreground/70 focus:border-accent focus:ring-2 focus:ring-accent/20;
+    @apply border-border bg-card text-foreground placeholder:text-muted-foreground/70 focus:border-accent focus:ring-accent/20 h-12 w-full rounded-lg border pr-10 pl-11 text-sm transition-all outline-none focus:ring-2;
 }
 
 .form-input.standalone {
@@ -413,5 +402,5 @@
 }
 
 .info-alert {
-    @apply mt-6 flex items-start gap-3 rounded-lg border border-secondary/30 bg-secondary/5 p-4 text-sm text-muted-foreground;
+    @apply border-secondary/30 bg-secondary/5 text-muted-foreground mt-6 flex items-start gap-3 rounded-lg border p-4 text-sm;
 }
