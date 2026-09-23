@@ -1,7 +1,7 @@
 <script setup lang="ts">
 defineProps<{
-    side: 'left' | 'right'
-}>()
+    side: "left" | "right";
+}>();
 </script>
 
 <template>

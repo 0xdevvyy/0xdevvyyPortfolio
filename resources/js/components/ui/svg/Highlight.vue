@@ -1,5 +1,4 @@
-<script setup lang="ts">
-</script>
+<script setup lang="ts"></script>
 
 <template>
     <svg
@@ -20,7 +19,6 @@
     </svg>
 </template>
 
-
 <style scoped>
 .title-highlight {
     position: absolute;
@@ -31,9 +29,7 @@
     width: calc(100% + 18px);
     height: 34px;
 
-    transform:
-        translateY(-40%)
-        rotate(-2deg);
+    transform: translateY(-40%) rotate(-2deg);
 
     overflow: visible;
 

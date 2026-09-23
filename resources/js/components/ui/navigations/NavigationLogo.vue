@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { Link } from '@inertiajs/vue3'
+import { Link } from "@inertiajs/vue3";
 
-const imgSrc = '/images/star.png'
+const imgSrc = "/images/star.png";
 </script>
 
 <template>
@@ -14,7 +14,7 @@ const imgSrc = '/images/star.png'
         <span
             class="relative flex h-10 w-10 items-center justify-center text-[38px] leading-none transition-transform duration-300 group-hover:-rotate-12"
         >
-            <img :src="imgSrc" alt="logo">
+            <img :src="imgSrc" alt="logo" />
         </span>
 
         <!-- Logo -->

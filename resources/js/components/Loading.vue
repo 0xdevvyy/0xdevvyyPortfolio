@@ -44,25 +44,16 @@ onMounted(() => {
 
 <template>
     <Transition name="intro">
-        <div
-            v-if="intro"
-            class="portfolio-intro"
-        >
+        <div v-if="intro" class="portfolio-intro">
             <div class="intro-content">
-
                 <div class="word-wrapper">
-
                     <!-- Outline -->
                     <svg
                         class="word-outline"
                         viewBox="0 0 1000 220"
                         preserveAspectRatio="xMidYMid meet"
                     >
-                        <text
-                            x="500"
-                            y="160"
-                            text-anchor="middle"
-                        >
+                        <text x="500" y="160" text-anchor="middle">
                             0xdevvy
                         </text>
                     </svg>
@@ -93,9 +84,7 @@ onMounted(() => {
                             0xdevvy
                         </text>
                     </svg>
-
                 </div>
-
             </div>
         </div>
     </Transition>
@@ -165,13 +154,13 @@ onMounted(() => {
 .intro-enter-active {
     transition:
         opacity 0.4s ease,
-        transform 0.7s cubic-bezier(.2, .8, .2, 1);
+        transform 0.7s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
 .intro-leave-active {
     transition:
         opacity 0.7s ease,
-        transform 0.9s cubic-bezier(.2, .8, .2, 1);
+        transform 0.9s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
 .intro-enter-from {
@@ -196,5 +185,4 @@ onMounted(() => {
         width: 92vw;
     }
 }
-
 </style>
