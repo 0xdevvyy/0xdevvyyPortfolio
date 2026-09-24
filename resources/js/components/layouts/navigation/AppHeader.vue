@@ -44,7 +44,7 @@ onUnmounted(() => {
 
 <template>
     <header
-        class="sticky top-0 z-50 w-full bg-[#F4EFDF] transition-transform duration-500 ease-out"
+        class="sticky top-0 z-50 w-full transition-transform duration-500 ease-out"
         :class="isVisible ? 'translate-y-0' : '-translate-y-full'"
     >
         <div class="px-6 py-5 md:px-10">
