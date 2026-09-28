@@ -160,15 +160,8 @@
         @apply bg-background text-foreground;
 
         background-image:
-            linear-gradient(
-                rgba(0, 0, 0, 0.06) 1px,
-                transparent 1px
-            ),
-            linear-gradient(
-                90deg,
-                rgba(0, 0, 0, 0.06) 1px,
-                transparent 1px
-            );
+            linear-gradient(rgba(0, 0, 0, 0.06) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(0, 0, 0, 0.06) 1px, transparent 1px);
 
         background-size: 24px 24px;
     }
@@ -271,7 +264,7 @@
      * Decorative details
      */
 
-    --accent: #d8ae4f;
+    --accent: #71866a;
     --accent-foreground: #173b5c;
 
     /*
