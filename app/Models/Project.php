@@ -48,7 +48,7 @@ class Project extends Model
     {
         return [
             'published_at' => 'datetime',
-            'features' => '[]',
+            'features' => 'array',
         ];
     }
 }
