@@ -18,7 +18,7 @@ class ScreenshotFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'screenshot_path' => fake()->imageUrl(1200, 800),
         ];
     }
 }

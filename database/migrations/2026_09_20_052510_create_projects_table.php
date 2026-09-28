@@ -1,6 +1,5 @@
 <?php
 
-use App\Models\Screenshot;
 use App\Models\Tag;
 use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
@@ -24,7 +23,6 @@ return new class extends Migration
             $table->json('features')->nullable(); // ex:{feature1, feature2}
             $table->boolean('is_published')->default(false);
             $table->timestamp('published_at');
-            $table->foreignIdFor(Screenshot::class)->constrained()->cascadeOnDelete();
             $table->foreignIdFor(Tag::class)->constrained()->cascadeOnDelete();
             $table->timestamps();
         });
