@@ -18,7 +18,7 @@ class ProjectFactory extends Factory
      */
     public function definition(): array
     {
-        $title = fake()->title();
+        $title = fake()->unique()->word();
 
         return [
             'user_id' => 1, // only me

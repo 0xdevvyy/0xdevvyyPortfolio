@@ -23,7 +23,6 @@ return new class extends Migration
             $table->json('features')->nullable(); // ex:{feature1, feature2}
             $table->boolean('is_published')->default(false);
             $table->timestamp('published_at');
-            $table->foreignIdFor(Tag::class)->constrained()->cascadeOnDelete();
             $table->timestamps();
         });
     }
