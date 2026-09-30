@@ -24,6 +24,7 @@ class ProjectFactory extends Factory
             'user_id' => 1, // only me
             'title' => $title,
             'slug' => Str::slug($title),
+            'thumbnail_path' => 'https://placehold.net/800x600.png',
             'description' => fake()->sentence(),
             'excerpt' => fake()->sentences(2, true),
             'features' => [fake()->sentence()], // try kung gagana sya kapag sa json
