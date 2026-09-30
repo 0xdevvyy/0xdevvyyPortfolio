@@ -3,6 +3,7 @@ import { Link } from "@inertiajs/vue3";
 import { Pin } from "@lucide/vue";
 
 import LineComponent from "@/components/ui/svg/Line.vue";
+import { show } from "@/routes/project";
 
 interface Tag {
     id: number;
@@ -27,7 +28,7 @@ interface Project {
 }
 
 const props = defineProps<{
-    project: Project;
+    projects: Project;
     index: number;
 }>();
 
@@ -64,7 +65,7 @@ const rotation = rotations[props.index % rotations.length];
                 <Pin :size="19" :stroke-width="2" />
             </div>
 
-            <!-- Project number -->
+            <!-- Projects number -->
             <div
                 class="m-2 absolute top-4 right-4 z-20 flex h-11 w-11 rotate-6 items-center justify-center rounded-full border-2 border-ink bg-gold-light font-mono text-xs font-bold text-ink"
             >
@@ -77,9 +78,9 @@ const rotation = rotations[props.index % rotations.length];
                     class="relative aspect-[16/10] overflow-hidden border-2 border-ink bg-paper-dark"
                 >
                     <img
-                        v-if="project.thumbnailPath"
-                        :src="project.thumbnailPath"
-                        :alt="`${project.title} screenshot`"
+                        v-if="projects.thumbnailPath"
+                        :src="projects.thumbnailPath"
+                        :alt="`${projects.title} screenshot`"
                         class="h-full w-full object-cover object-top transition-transform duration-500 group-hover:scale-[1.04]"
                     />
 
@@ -97,14 +98,14 @@ const rotation = rotations[props.index % rotations.length];
 
             <!-- Content -->
             <div class="p-5 sm:p-6">
-                <!-- Project label -->
+                <!-- Projects label -->
                 <div class="mb-2 flex items-center gap-2">
                     <span class="h-2 w-2 rounded-full bg-sage" />
 
                     <span
                         class="font-mono text-[10px] font-bold uppercase tracking-[0.2em] text-sage"
                     >
-                        project {{ String(index + 1).padStart(2, "0") }}
+                        projects {{ String(index + 1).padStart(2, "0") }}
                     </span>
                 </div>
 
@@ -113,7 +114,7 @@ const rotation = rotations[props.index % rotations.length];
                     <h2
                         class="font-display text-3xl leading-none text-ink sm:text-4xl"
                     >
-                        {{ project.title }}
+                        {{ projects.title }}
                     </h2>
                 </div>
 
@@ -124,16 +125,16 @@ const rotation = rotations[props.index % rotations.length];
 
                 <!-- Description -->
                 <p class="font-mono text-sm leading-6 text-ink/75">
-                    {{ project.description }}
+                    {{ projects.description }}
                 </p>
 
                 <!-- Tags -->
                 <div
-                    v-if="project.tags.length"
+                    v-if="projects.tags.length"
                     class="mt-5 flex flex-wrap gap-2"
                 >
                     <span
-                        v-for="tag in project.tags"
+                        v-for="tag in projects.tags"
                         :key="tag.id"
                         class="border border-ink/35 bg-paper-dark/55 px-2.5 py-1 font-mono text-[10px] font-bold uppercase tracking-wide text-ink"
                     >
@@ -141,13 +142,13 @@ const rotation = rotations[props.index % rotations.length];
                     </span>
                 </div>
 
-                <!-- View project -->
+                <!-- View projects -->
                 <div class="mt-6 flex items-end justify-end">
                     <Link
-                        :href="`/projects/${project.slug}`"
+                        :href="show(projects.slug)"
                         class="group/link relative inline-block px-1 pb-1 font-mono text-[10px] font-bold uppercase tracking-[0.12em] text-ink transition-colors hover:text-sage"
                     >
-                        View project
+                        View projects
 
                         <LineComponent
                             class="origin-left scale-x-0 transition-transform duration-300 ease-out group-hover/link:scale-x-100"

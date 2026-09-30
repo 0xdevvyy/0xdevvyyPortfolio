@@ -18,4 +18,15 @@ class ProjectController extends Controller
             'projects' => ProjectResource::collection($projects),
         ]);
     }
+
+    public function show(string $slug): Response
+    {
+        $project = Project::with(['tags', 'screenshots'])
+            ->where('slug', $slug)
+            ->firstOrFail();
+
+        return inertia('project/Show', [
+            'project' => new ProjectResource($project),
+        ]);
+    }
 }

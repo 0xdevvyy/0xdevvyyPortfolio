@@ -9,6 +9,10 @@ void createInertiaApp({
         switch (true) {
             case name.startsWith('landing/'):
                 return AppLayout;
+            // case name.startsWith('project/'):
+            //     return AppLayout;
+            default:
+                return AppLayout;
         }
     },
     progress: {

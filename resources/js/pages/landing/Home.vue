@@ -4,7 +4,8 @@ import PrimaryButton from '@/components/ui/button/PrimaryButton.vue';
 import HeadingRays from '@/components/ui/svg/HeadingRays.vue';
 import Highlight from '@/components/ui/svg/Highlight.vue';
 import Line from '@/components/ui/svg/Line.vue';
-import { home } from '@/routes';
+import { aboutMe, home } from '@/routes';
+import { index } from '@/routes/project';
 
 const logo = '/images/coding.png';
 </script>
@@ -57,9 +58,9 @@ const logo = '/images/coding.png';
                 </p>
 
                 <div class="mt-8 flex flex-wrap items-center gap-3">
-                    <PrimaryButton :href="home()"> My Projects </PrimaryButton>
+                    <PrimaryButton :href="index()"> My Projects </PrimaryButton>
 
-                    <GhostButton :href="home()"> About Me </GhostButton>
+                    <GhostButton :href="aboutMe()"> About Me </GhostButton>
 
                     <GhostButton :href="home()"> Blogs </GhostButton>
                 </div>

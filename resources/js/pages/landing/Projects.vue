@@ -13,7 +13,7 @@ interface Screenshot {
     screenshotPath: string;
 }
 
-interface Project {
+interface Projects {
     id: number;
     title: string;
     slug: string;
@@ -26,7 +26,7 @@ interface Project {
 }
 
 defineProps<{
-    projects: Project[];
+    projects: Projects[];
 }>();
 </script>
 
@@ -112,7 +112,8 @@ defineProps<{
                     class="font-hand text-ink/85 mt-5 max-w-xl text-lg leading-relaxed sm:text-xl"
                 >
                     My projects throughout my journey, from learning the basics
-                    to building scalable system for not it is just mostly basics stuff.
+                    to building scalable system for not it is just mostly basics
+                    stuff.
                 </p>
 
                 <p class="font-hand text-sage mt-3 text-base sm:text-lg">
@@ -128,7 +129,7 @@ defineProps<{
                 <ProjectCard
                     v-for="(project, index) in projects"
                     :key="project.id"
-                    :project="project"
+                    :projects="project"
                     :index="index"
                 />
             </div>
@@ -147,5 +148,6 @@ defineProps<{
                 </p>
             </div>
         </div>
+        <!-- should i do infinite scrolling or pagination? -->
     </section>
 </template>
