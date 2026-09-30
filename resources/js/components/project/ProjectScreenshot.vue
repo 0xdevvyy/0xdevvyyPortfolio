@@ -1,11 +1,6 @@
 <script setup lang="ts">
 import { X } from '@lucide/vue';
-import {
-    onBeforeUnmount,
-    onMounted,
-    ref,
-    watch,
-} from 'vue';
+import { onBeforeUnmount, onMounted, ref, watch } from 'vue';
 
 interface Screenshot {
     id: number;
@@ -34,9 +29,7 @@ const handleKeydown = (event: KeyboardEvent) => {
 };
 
 watch(selectedScreenshot, (screenshot) => {
-    document.body.style.overflow = screenshot
-        ? 'hidden'
-        : '';
+    document.body.style.overflow = screenshot ? 'hidden' : '';
 });
 
 onMounted(() => {
@@ -76,7 +69,7 @@ onBeforeUnmount(() => {
         >
             <div
                 v-if="selectedScreenshot"
-                class="fixed inset-0 z-50 flex items-center justify-center bg-ink/20 p-4 backdrop-blur-md sm:p-8"
+                class="bg-ink/20 fixed inset-0 z-50 flex items-center justify-center p-4 backdrop-blur-md sm:p-8"
                 @click.self="closeScreenshot"
             >
                 <!-- Glass layer -->
@@ -88,7 +81,7 @@ onBeforeUnmount(() => {
                 <button
                     type="button"
                     aria-label="Close screenshot"
-                    class="absolute top-4 right-4 z-20 flex h-10 w-10 cursor-pointer items-center justify-center rounded-full border border-white/50 bg-white/30 text-ink shadow-lg backdrop-blur-md transition-all hover:rotate-3 hover:bg-white/50 sm:top-8 sm:right-8"
+                    class="text-ink absolute top-4 right-4 z-20 flex h-10 w-10 cursor-pointer items-center justify-center rounded-full border border-white/50 bg-white/30 shadow-lg backdrop-blur-md transition-all hover:rotate-3 hover:bg-white/50 sm:top-8 sm:right-8"
                     @click="closeScreenshot"
                 >
                     <X :size="19" />
@@ -108,9 +101,7 @@ onBeforeUnmount(() => {
                         class="relative max-h-[90vh] overflow-hidden rounded-sm border border-white/60 bg-white/20 p-2 shadow-[0_20px_60px_rgba(0,0,0,0.18)] backdrop-blur-xl sm:p-3"
                     >
                         <img
-                            :src="
-                                selectedScreenshot.screenshotPath
-                            "
+                            :src="selectedScreenshot.screenshotPath"
                             :alt="`${projectTitle} screenshot`"
                             class="max-h-[84vh] max-w-[90vw] object-contain"
                         />
@@ -119,7 +110,7 @@ onBeforeUnmount(() => {
 
                 <!-- Hint -->
                 <p
-                    class="absolute bottom-4 left-1/2 z-10 -translate-x-1/2 whitespace-nowrap font-mono text-[8px] uppercase tracking-[0.15em] text-ink/50 sm:bottom-7"
+                    class="text-ink/50 absolute bottom-4 left-1/2 z-10 -translate-x-1/2 font-mono text-[8px] tracking-[0.15em] whitespace-nowrap uppercase sm:bottom-7"
                 >
                     Click outside · press ESC · or click X
                 </p>

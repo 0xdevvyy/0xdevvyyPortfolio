@@ -13,7 +13,6 @@ void createInertiaApp({
             //     return AppLayout;
             default:
                 return AppLayout;
-
         }
     },
     progress: {
