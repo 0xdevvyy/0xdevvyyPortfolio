@@ -25,6 +25,7 @@ class ProjectResource extends JsonResource
             // 'userId' => $this->user_id,
             'title' => $this->title,
             'slug' => $this->slug,  // i can create a path in the model..
+            'thumbnailPath' => $this->thumbnail_path,
             'description' => $this->description,
             'excerpt' => $this->excerpt,
             'features' => $this->features,
