@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::inertia('/test', 'Testing')->name('test');
 
-Route::middleware(['guest', 'throttle:6,1'])->group(function (): void {
+Route::middleware(['guest'])->group(function (): void {
     Route::inertia('/', 'landing/Home')->name('home');
     Route::inertia('/about-me', 'landing/About')->name('about-me');
     Route::get('/projects', [ProjectController::class, 'index'])->name('project.index');

@@ -1,372 +1,268 @@
-```vue
 <script setup lang="ts">
 import { Link } from '@inertiajs/vue3';
 import {
     ArrowLeft,
-    ArrowUpRight,
     Check,
-    ExternalLink,
-    X,
 } from '@lucide/vue';
-import { onBeforeUnmount, onMounted, ref, watch } from 'vue';
+
+import ProjectScreenshots from '@/components/project/ProjectScreenshot.vue';
 import { index } from '@/routes/project';
+
+interface Tag {
+    id: number;
+    name: string;
+}
 
 interface Screenshot {
     id: number;
-    path: string;
+    screenshotPath: string;
 }
 
-const screenshots: Screenshot[] = [
-    {
-        id: 1,
-        path: '/images/projects/placeholder-1.png',
-    },
-    {
-        id: 2,
-        path: '/images/projects/placeholder-2.png',
-    },
-    {
-        id: 3,
-        path: '/images/projects/placeholder-3.png',
-    },
-];
+interface Project {
+    id: number;
+    title: string;
+    slug: string;
+    thumbnailPath: string | null;
+    excerpt: string | null;
+    description: string;
+    features: string[];
+    tags: Tag[];
+    screenshots: Screenshot[];
+    liveUrl: string | null;
+}
 
-const tags = [
-    'Laravel',
-    'Vue',
-    'Inertia',
-    'Tailwind CSS',
-];
+const { project } = defineProps<{
+    project: Project;
+}>();
 
-const features = [
-    'User authentication and account management',
-    'Responsive and accessible interface',
-    'CRUD operations and data management',
-    'Role-based functionality',
-    'Clean and reusable component structure',
-];
-
-const selectedScreenshot = ref<Screenshot | null>(null);
-
-const openScreenshot = (screenshot: Screenshot) => {
-    selectedScreenshot.value = screenshot;
-};
-
-const closeScreenshot = () => {
-    selectedScreenshot.value = null;
-};
-
-const handleKeydown = (event: KeyboardEvent) => {
-    if (event.key === 'Escape') {
-        closeScreenshot();
-    }
-};
-
-watch(selectedScreenshot, (screenshot) => {
-    document.body.style.overflow = screenshot ? 'hidden' : '';
-});
-
-onMounted(() => {
-    window.addEventListener('keydown', handleKeydown);
-});
-
-onBeforeUnmount(() => {
-    window.removeEventListener('keydown', handleKeydown);
-    document.body.style.overflow = '';
-});
 </script>
 
 <template>
-    <main
-        class="relative min-h-screen overflow-hidden bg-paper px-5 py-8 text-ink sm:px-8 lg:px-12"
-    >
-        <div class="pointer-events-none absolute inset-0 opacity-30">
-            <div
-                class="absolute inset-0 bg-[linear-gradient(90deg,transparent_98%,rgba(23,59,92,0.06)_100%),linear-gradient(0deg,transparent_98%,rgba(23,59,92,0.06)_100%)] bg-[size:24px_24px]"
-            />
-        </div>
-
-        <div class="relative mx-auto max-w-6xl">
+    <section class="min-h-screen overflow-hidden text-ink">
+        <div
+            class="mx-auto max-w-6xl px-5 py-3 sm:px-10 lg:px-7"
+        >
             <!-- Back -->
-            <Link
-                :href="index().url"
-                class="group mb-8 inline-flex items-center gap-2 font-mono text-[10px] text-ink/65 transition-colors hover:text-sage sm:mb-10"
-            >
-                <ArrowLeft
-                    :size="14"
-                    class="transition-transform group-hover:-translate-x-1"
-                />
-
-                Back to Projects
-            </Link>
-
-            <article>
-                <!-- Project Preview -->
-                <section class="relative">
-                    <div
-                        class="absolute inset-2 rotate-[-1deg] border border-ink/20 sm:inset-4"
+            <div class="mb-5">
+                <Link
+                    :href="index().url"
+                    class="font-body group inline-flex items-center gap-2 text-sm text-ink/60 transition hover:text-ink"
+                >
+                    <ArrowLeft
+                        :size="16"
+                        class="transition-transform duration-300 group-hover:-translate-x-1"
                     />
 
-                    <div
-                        class="relative rotate-[0.4deg] border-2 border-ink bg-paper-light p-2 shadow-[6px_7px_0_0_var(--ink)] sm:p-3"
-                    >
-                        <div
-                            class="aspect-[16/9] overflow-hidden border border-ink/30 bg-paper-dark"
-                        >
-                            <div
-                                class="flex h-full items-center justify-center"
-                            >
-                                <span
-                                    class="font-hand text-2xl text-ink/40 sm:text-4xl"
-                                >
-                                    project preview
-                                </span>
-                            </div>
-                        </div>
-                    </div>
+                    <span>back to projects</span>
+                </Link>
+            </div>
 
-                    <div
-                        class="absolute -bottom-3 -right-1 hidden rotate-[-4deg] font-hand text-sm text-ink/60 sm:block lg:-right-4"
-                    >
-                        project preview
-                    </div>
-                </section>
-
-                <!-- Project Heading -->
-                <section class="relative py-12 sm:py-16">
-                    <div
-                        class="grid gap-8 md:grid-cols-[1fr_auto] md:items-end"
-                    >
-                        <div>
-                            <p
-                                class="mb-3 font-mono text-[9px] uppercase tracking-[0.2em] text-sage"
-                            >
-                                Project
-                            </p>
-
-                            <h1
-                                class="max-w-4xl font-display text-4xl leading-[1.05] sm:text-5xl lg:text-6xl"
-                            >
-                                Sample Project
-                            </h1>
-
-                            <p
-                                class="mt-5 max-w-2xl font-mono text-xs leading-6 text-ink/70 sm:text-sm"
-                            >
-                                A short placeholder description for the project.
-                                This will eventually come from the database.
-                            </p>
-
-                            <div class="mt-6 flex flex-wrap gap-2">
-                                <span
-                                    v-for="tag in tags"
-                                    :key="tag"
-                                    class="rounded-full border border-ink/45 bg-paper-light px-3 py-1.5 font-mono text-[9px] text-ink sm:text-[10px]"
-                                >
-                                    {{ tag }}
-                                </span>
-                            </div>
-                        </div>
-
-                        <a
-                            href="#"
-                            class="group relative inline-flex w-fit items-center gap-3 border-2 border-ink bg-paper-light px-5 py-3 font-hand text-base shadow-[4px_4px_0_0_var(--ink)] transition-all hover:-translate-y-1 hover:shadow-[6px_6px_0_0_var(--ink)] md:mb-1"
-                        >
-                            View Live Site
-
-                            <ArrowUpRight
-                                :size="17"
-                                class="transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
-                            />
-
-                            <ExternalLink
-                                :size="11"
-                                class="absolute -right-2 -top-2 rotate-12"
-                            />
-                        </a>
-                    </div>
-                </section>
-
-                <!-- About + Features -->
-                <section
-                    class="grid gap-10 border-y border-ink/15 py-10 md:grid-cols-[1.2fr_0.8fr] md:gap-14 md:py-12"
+            <!-- Hero -->
+            <section class="relative">
+                <div
+                    class="grid items-start gap-10 lg:grid-cols-[1fr_0.9fr]"
                 >
-                    <!-- About -->
-                    <div>
-                        <div class="mb-4 inline-block">
-                            <h2
-                                class="font-hand text-2xl leading-tight sm:text-3xl"
-                            >
-                                About the project
-                            </h2>
+                    <!-- Project Information -->
+                    <div class="relative">
 
-                            <div
-                                class="mt-1 h-[2px] w-full rotate-[-1deg] bg-ink/65"
-                            />
-                        </div>
-
-                        <p
-                            class="max-w-2xl font-mono text-[11px] leading-7 text-ink/75 sm:text-xs sm:leading-8"
+                        <h1
+                            class="font-display max-w-3xl -rotate-1 text-5xl leading-[0.95] text-ink sm:text-6xl lg:text-7xl"
                         >
-                            This is placeholder project content. The actual
-                            project description will be added later once the
-                            database integration is connected.
-                        </p>
-                    </div>
+                            {{ project.title }}
+                        </h1>
 
-                    <!-- Features -->
-                    <div>
-                        <div class="mb-4 inline-block">
-                            <h2
-                                class="font-hand text-2xl leading-tight sm:text-3xl"
+                        <div class="mt-7 max-w-xl">
+                            <p
+                                v-if="project.excerpt"
+                                class="font-hand text-xl leading-relaxed text-ink/75 sm:text-2xl"
                             >
-                                Key features
-                            </h2>
-
-                            <div
-                                class="mt-1 h-[2px] w-full rotate-[1deg] bg-ink/65"
-                            />
+                                {{ project.excerpt }}
+                            </p>
                         </div>
 
-                        <ul class="space-y-3">
-                            <li
-                                v-for="(feature, featureIndex) in features"
-                                :key="`${featureIndex}-${feature}`"
-                                class="flex items-start gap-3 font-mono text-[10px] leading-5 text-ink/75 sm:text-[11px]"
-                            >
-                                <span
-                                    class="mt-1 flex h-4 w-4 shrink-0 items-center justify-center border border-ink/50"
-                                >
-                                    <Check
-                                        :size="9"
-                                        :stroke-width="2"
-                                    />
-                                </span>
-
-                                <span>{{ feature }}</span>
-                            </li>
-                        </ul>
-                    </div>
-                </section>
-
-                <!-- Built With -->
-                <section class="py-10 sm:py-12">
-                    <div
-                        class="flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between"
-                    >
-                        <div>
-                            <div class="inline-block">
-                                <h2
-                                    class="font-hand text-2xl leading-tight sm:text-3xl"
-                                >
-                                    Built with
-                                </h2>
-
-                                <div
-                                    class="mt-1 h-[2px] w-full rotate-[1deg] bg-ink/65"
-                                />
-                            </div>
-                        </div>
-
+                        <!-- Tags -->
                         <div
-                            class="flex flex-wrap gap-2 sm:justify-end"
+                            v-if="project.tags.length"
+                            class="mt-8 flex flex-wrap gap-2"
                         >
                             <span
-                                v-for="tag in tags"
-                                :key="tag"
-                                class="border border-ink/45 bg-paper-light px-3 py-1.5 font-mono text-[9px] text-ink sm:text-[10px]"
+                                v-for="tag in project.tags"
+                                :key="tag.id"
+                                class="font-body rounded-full border border-ink/20 px-3 py-1 text-[11px] uppercase tracking-wide text-ink/65"
                             >
-                                {{ tag }}
+                                {{ tag.name }}
                             </span>
                         </div>
                     </div>
-                </section>
 
-                <!-- Screenshots -->
-                <section class="pb-12 sm:pb-16">
+                    <!-- Thumbnail -->
                     <div
-                        class="mb-7 flex items-end justify-between gap-5"
+                        v-if="project.thumbnailPath"
+                        class="relative lg:pt-8"
                     >
-                        <div>
-                            <div class="inline-block">
-                                <h2
-                                    class="font-hand text-2xl leading-tight sm:text-3xl"
-                                >
-                                    Screenshots
-                                </h2>
-
-                                <div
-                                    class="mt-1 h-[2px] w-full rotate-[-1deg] bg-ink/65"
+                        <div
+                            class="rotate-[1.5deg] bg-paper-light p-3 shadow-[5px_7px_0_rgba(23,59,92,0.08)] transition duration-500 hover:rotate-0 hover:shadow-[8px_11px_0_rgba(23,59,92,0.12)] sm:p-4"
+                        >
+                            <div
+                                class="overflow-hidden bg-paper-dark"
+                            >
+                                <img
+                                    :src="
+                                        project.thumbnailPath
+                                    "
+                                    :alt="project.title"
+                                    class="block h-auto w-full"
                                 />
                             </div>
 
                             <p
-                                v-if="screenshots.length > 1"
-                                class="mt-3 font-mono text-[8px] text-ink/40 sm:text-[9px]"
+                                class="font-hand mt-3 px-1 text-sm text-ink/50"
                             >
-                                Scroll sideways to see more
+                                the main view
                             </p>
                         </div>
-
-                        <span
-                            class="hidden font-mono text-[8px] uppercase tracking-wider text-ink/40 sm:block"
-                        >
-                            {{ screenshots.length }}
-                            {{ screenshots.length === 1 ? 'image' : 'images' }}
-                        </span>
                     </div>
+                </div>
+            </section>
 
-                    <!-- Horizontal Gallery -->
-                    <div
-                        class="-mx-5 overflow-x-auto px-5 pb-6 sm:-mx-8 sm:px-8 lg:-mx-12 lg:px-12"
+            <!-- Main Content -->
+           
+            <section
+                class="mt-4 grid gap-14 lg:grid-cols-2 lg:gap-20"
+            >
+                <!-- Left: About the Project -->
+                <div>
+                    <h2
+                        class="font-heading text-3xl text-ink sm:text-4xl"
                     >
-                        <div
-                            class="flex w-max gap-6 pr-5 sm:gap-8"
+                        About the Project
+                    </h2>
+
+                    <div
+                        class="font-body mt-5 max-w-2xl text-sm leading-8 text-ink/70 sm:text-base"
+                    >
+                        <p>
+                            {{ project.description }}
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Right: Features -->
+                <div
+                    v-if="project.features.length"
+                >
+                    <h2
+                        class="font-heading text-3xl text-ink sm:text-4xl"
+                    >
+                        Features
+                    </h2>
+
+                    <ul class="mt-6 space-y-4">
+                        <li
+                            v-for="(
+                                feature, featureIndex
+                            ) in project.features"
+                            :key="featureIndex"
+                            class="group flex items-start gap-4"
                         >
-                            <button
-                                v-for="(screenshot, screenshotIndex) in screenshots"
-                                :key="screenshot.id"
-                                type="button"
-                                class="group relative w-[82vw] max-w-[700px] shrink-0 cursor-zoom-in text-left sm:w-[65vw] lg:w-[600px]"
-                                :aria-label="`Open screenshot ${screenshotIndex + 1}`"
-                                @click="openScreenshot(screenshot)"
+                            <span
+                                class="mt-1 flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-gold/50"
+                            >
+                                <Check
+                                    :size="15"
+                                    :stroke-width="2"
+                                />
+                            </span>
+
+                            <span
+                                class="font-body pt-1 text-sm leading-6 text-ink/70"
+                            >
+                                {{ feature }}
+                            </span>
+                        </li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Screenshots -->
+            <section
+                v-if="project.screenshots.length"
+                class="relative mt-7"
+            >
+                <!-- Header -->
+                <div
+                    class="mb-5 flex items-end justify-between"
+                >
+                    <div>
+                        <h2
+                            class="font-heading mt-3 text-4xl text-ink sm:text-5xl"
+                        >
+                            Screenshots
+                        </h2>
+                    </div>
+                </div>
+
+                <!-- Photo Book -->
+                <div
+                    class="relative border-y border-ink/10 py-6 sm:py-8"
+                >
+                    <!-- Bento Sheet -->
+                    <div
+                        class="grid grid-cols-2 gap-3 sm:grid-cols-4 sm:gap-4"
+                    >
+                        <article
+                            v-for="(
+                                screenshot, screenshotIndex
+                            ) in project.screenshots"
+                            :key="screenshot.id"
+                            class="group relative"
+                            :class="[
+                                screenshotIndex === 0
+                                    ? 'col-span-2 row-span-2'
+                                    : '',
+
+                                screenshotIndex === 3
+                                    ? 'sm:col-span-2'
+                                    : '',
+
+                                screenshotIndex === 4
+                                    ? 'sm:col-span-2'
+                                    : '',
+                            ]"
+                        >
+                            <!-- Image -->
+                            <div
+                                class="relative h-full bg-paper-light p-1.5 transition-transform duration-500 sm:p-2"
+                                :class="
+                                    screenshotIndex % 3 === 0
+                                        ? 'rotate-[-0.35deg] group-hover:rotate-0'
+                                        : screenshotIndex % 3 === 1
+                                        ? 'rotate-[0.25deg] group-hover:rotate-0'
+                                        : 'rotate-[-0.15deg] group-hover:rotate-0'
+                                "
                             >
                                 <div
-                                    class="absolute inset-0 border border-ink/20"
-                                    :class="
-                                        screenshotIndex % 2 === 0
-                                            ? 'translate-x-2 translate-y-2 rotate-[1deg]'
-                                            : '-translate-x-1 translate-y-2 rotate-[-1deg]'
-                                    "
-                                />
-
-                                <div
-                                    class="relative border-2 border-ink bg-paper-light p-2 transition-transform duration-300 group-hover:-translate-y-1 sm:p-3"
-                                    :class="
-                                        screenshotIndex % 2 === 0
-                                            ? 'rotate-[-0.5deg]'
-                                            : 'rotate-[0.5deg]'
-                                    "
+                                    class="relative h-full overflow-hidden bg-paper-dark"
                                 >
-                                    <div
-                                        class="aspect-[16/10] overflow-hidden border border-ink/30 bg-paper-dark"
-                                    >
-                                        <img
-                                            :src="screenshot.path"
-                                            :alt="`Sample Project screenshot ${screenshotIndex + 1}`"
-                                            class="h-full w-full object-cover object-top transition-transform duration-500 group-hover:scale-[1.02]"
-                                            loading="lazy"
-                                        />
-                                    </div>
+                                    <ProjectScreenshots
+                                        :screenshots="[screenshot]"
+                                        :project-title="
+                                            project.title
+                                        "
+                                    />
 
+                                    <!-- Hover -->
                                     <div
-                                        class="flex items-center justify-between pt-2 font-mono text-[8px] uppercase tracking-wider text-ink/40"
-                                    >
-                                        <span>
-                                            Screenshot
-                                        </span>
+                                        class="pointer-events-none absolute inset-0 bg-paper-light/0 transition-all duration-500 group-hover:bg-paper-light/10"
+                                    ></div>
 
-                                        <span>
+                                    <!-- Number -->
+                                    <div
+                                        class="absolute top-2 left-2 flex h-6 min-w-6 items-center justify-center bg-paper-light/90 px-1.5"
+                                    >
+                                        <span
+                                            class="font-mono text-[8px] text-ink/55"
+                                        >
                                             {{
                                                 String(
                                                     screenshotIndex + 1,
@@ -375,87 +271,11 @@ onBeforeUnmount(() => {
                                         </span>
                                     </div>
                                 </div>
-                            </button>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- Bottom -->
-                <section
-                    class="flex flex-col items-start justify-between gap-5 border-t border-ink/15 py-8 sm:flex-row sm:items-center"
-                >
-                    <p
-                        class="rotate-[-2deg] font-hand text-lg text-ink/60"
-                    >
-                        That's it for this project.
-                    </p>
-
-                    <Link
-                        :href="index().url"
-                        class="group inline-flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.15em] text-ink/65 transition-colors hover:text-sage"
-                    >
-                        <ArrowLeft
-                            :size="13"
-                            class="transition-transform group-hover:-translate-x-1"
-                        />
-
-                        All Projects
-                    </Link>
-                </section>
-            </article>
-        </div>
-
-        <!-- Screenshot Lightbox -->
-        <Transition
-            enter-active-class="duration-200 ease-out"
-            enter-from-class="opacity-0"
-            enter-to-class="opacity-100"
-            leave-active-class="duration-150 ease-in"
-            leave-from-class="opacity-100"
-            leave-to-class="opacity-0"
-        >
-            <div
-                v-if="selectedScreenshot"
-                class="fixed inset-0 z-50 flex items-center justify-center bg-[#102D47]/90 p-4 backdrop-blur-sm sm:p-8"
-                @click.self="closeScreenshot"
-            >
-                <!-- Close -->
-                <button
-                    type="button"
-                    aria-label="Close screenshot"
-                    class="absolute right-4 top-4 z-10 flex h-10 w-10 items-center justify-center border-2 border-paper bg-paper-light text-ink shadow-[3px_3px_0_0_var(--paper)] transition-transform hover:rotate-3 sm:right-8 sm:top-8"
-                    @click="closeScreenshot"
-                >
-                    <X :size="19" />
-                </button>
-
-                <!-- Image -->
-                <div
-                    class="relative max-h-[90vh] max-w-[95vw] sm:max-w-[90vw]"
-                >
-                    <div
-                        class="absolute inset-0 translate-x-2 translate-y-2 rotate-[-1deg] border-2 border-paper/40"
-                    />
-
-                    <div
-                        class="relative max-h-[90vh] overflow-hidden border-2 border-ink bg-paper-light p-2 shadow-[6px_7px_0_0_rgba(0,0,0,0.25)] sm:p-3"
-                    >
-                        <img
-                            :src="selectedScreenshot.path"
-                            alt="Sample Project screenshot"
-                            class="max-h-[84vh] max-w-[90vw] object-contain"
-                        />
+                            </div>
+                        </article>
                     </div>
                 </div>
-
-                <!-- Hint -->
-                <p
-                    class="absolute bottom-4 left-1/2 -translate-x-1/2 font-mono text-[8px] uppercase tracking-[0.15em] text-paper/60 sm:bottom-7"
-                >
-                    Click outside or press ESC to close
-                </p>
-            </div>
-        </Transition>
-    </main>
+            </section>
+        </div>
+    </section>
 </template>
-```
