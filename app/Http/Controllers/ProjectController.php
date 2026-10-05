@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\ProjectResource;
 use App\Models\Project;
+use Inertia\Inertia;
 use Inertia\Response;
 
 class ProjectController extends Controller
@@ -14,7 +15,7 @@ class ProjectController extends Controller
     {
         $projects = Project::query()->with(['screenshots', 'tags'])->where('is_published', true)->get(); // testing first, then i will add it in a query class. ex: isPublished
 
-        return inertia('landing/Projects', [
+        return Inertia::render('landing/Projects', [
             'projects' => ProjectResource::collection($projects),
         ]);
     }
@@ -25,7 +26,7 @@ class ProjectController extends Controller
             ->where('slug', $slug)
             ->firstOrFail();
 
-        return inertia('project/Show', [
+        return Inertia::render('project/Show', [
             'project' => new ProjectResource($project),
         ]);
     }

@@ -2,7 +2,7 @@
 import { onMounted, onUnmounted, ref } from 'vue';
 import NavigationLogo from '@/components/ui/navigations/NavigationLogo.vue';
 import NavigationLink from '@/components/ui/navigations/NavigationLink.vue';
-import { aboutMe, home } from '@/routes';
+import { aboutMe, contact, home } from '@/routes';
 import { Link } from '@inertiajs/vue3';
 import { index } from '@/routes/project';
 
@@ -15,7 +15,7 @@ const items = [
     { name: 'Me', href: home() },
     { name: 'Projects', href: index() },
     { name: 'About Me', href: aboutMe() },
-    { name: 'Contact', href: '#contact' },
+    { name: 'Contact', href: contact() },
 ];
 
 const handleScroll = () => {

@@ -141,6 +141,11 @@
 
     --color-red: var(--red);
     --color-pencil: var(--pencil);
+
+    --color-error: var(--error);
+    --color-info: var(--info);
+    --color-success: var(--success);
+    --color-warning: var(--warning);
 }
 
 @layer base {
@@ -356,6 +361,11 @@
     /* Supporting */
     --red: #c86b52;
     --pencil: #8b8a82;
+
+    --error: #bd0505;
+    --info: #2f00ff;
+    --success: #35ff50;
+    --warning: #ffa600;
 }
 
 /*
