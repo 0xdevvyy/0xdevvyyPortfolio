@@ -3,15 +3,12 @@ import HeadingRays from '@/components/ui/svg/HeadingRays.vue';
 import Highlight from '@/components/ui/svg/Highlight.vue';
 import Line from '@/components/ui/svg/Line.vue';
 
-import {
-    Mail,
-    MapPin,
-} from '@lucide/vue';
+import { Mail, MapPin } from '@lucide/vue';
 
 const socials = [
     {
         name: 'Gmail',
-        href: 'mailto:supanrenieljohn.com',
+        href: 'mailto:supanrenieljohn@gmail.com',
         type: 'gmail',
         note: 'say hello',
     },
@@ -48,7 +45,7 @@ const socials = [
 
                     <div class="relative inline-block">
                         <h1
-                            class="font-display text-6xl uppercase leading-[0.85] text-primary sm:text-7xl lg:text-8xl"
+                            class="font-display text-primary text-6xl leading-[0.85] uppercase sm:text-7xl lg:text-8xl"
                         >
                             Get in
                             <br />
@@ -66,7 +63,7 @@ const socials = [
                         <Highlight />
 
                         <span
-                            class="font-hand relative z-10 text-2xl text-primary sm:text-3xl"
+                            class="font-hand text-primary relative z-10 text-2xl sm:text-3xl"
                         >
                             I'm just a message away
                         </span>
@@ -74,10 +71,10 @@ const socials = [
                 </p>
 
                 <p
-                    class="font-hand mt-7 max-w-xl text-xl leading-relaxed text-primary/90 sm:text-2xl"
+                    class="font-hand text-primary/90 mt-7 max-w-xl text-xl leading-relaxed sm:text-2xl"
                 >
-                    Got a project idea, a job opportunity, want to
-                    collaborate, or just want to say hi?
+                    Got a project idea, a job opportunity, want to collaborate,
+                    or just want to say hi?
 
                     <br />
                     <br />
@@ -86,12 +83,9 @@ const socials = [
                 </p>
 
                 <div
-                    class="mt-8 flex items-center gap-3 font-hand text-lg text-primary"
+                    class="font-hand text-primary mt-8 flex items-center gap-3 text-lg"
                 >
-                    <MapPin
-                        :size="24"
-                        :stroke-width="1.8"
-                    />
+                    <MapPin :size="24" :stroke-width="1.8" />
 
                     <span>
                         Philippines
@@ -103,37 +97,33 @@ const socials = [
             </div>
 
             <!-- RIGHT -->
-            <section
-                class="relative min-h-[520px] sm:min-h-[580px]"
-            >
+            <section class="relative min-h-[520px] sm:min-h-[580px]">
                 <!-- Handwritten heading -->
                 <div
-                    class="absolute left-1/2 top-0 z-20 -translate-x-1/2 -rotate-2 whitespace-nowrap"
+                    class="absolute top-0 left-1/2 z-20 -translate-x-1/2 -rotate-2 whitespace-nowrap"
                 >
-                    <span
-                        class="font-doodle text-3xl text-primary"
-                    >
+                    <span class="font-doodle text-primary text-3xl">
                         Find me here
                     </span>
                 </div>
 
                 <!-- Large doodle circle -->
                 <div
-                    class="absolute left-1/2 top-1/2 h-[370px] w-[370px] -translate-x-1/2 -translate-y-1/2 rounded-full border border-dashed border-primary/20 sm:h-[460px] sm:w-[460px]"
+                    class="border-primary/20 absolute top-1/2 left-1/2 h-[370px] w-[370px] -translate-x-1/2 -translate-y-1/2 rounded-full border border-dashed sm:h-[460px] sm:w-[460px]"
                 ></div>
 
                 <div
-                    class="absolute left-1/2 top-1/2 h-[300px] w-[300px] -translate-x-1/2 -translate-y-1/2 rounded-full border border-gold/30 sm:h-[380px] sm:w-[380px]"
+                    class="border-gold/30 absolute top-1/2 left-1/2 h-[300px] w-[300px] -translate-x-1/2 -translate-y-1/2 rounded-full border sm:h-[380px] sm:w-[380px]"
                 ></div>
 
                 <!-- GMAIL -->
                 <a
                     :href="socials[0].href"
                     :aria-label="socials[0].name"
-                    class="group absolute left-[8%] top-[23%] z-10"
+                    class="group absolute top-[23%] left-[8%] z-10"
                 >
                     <div
-                        class="relative h-24 w-24 overflow-hidden rounded-[38%] border border-primary/20 bg-white shadow-[5px_7px_0_0_rgba(23,59,92,0.12)] transition duration-300 group-hover:-translate-y-3 group-hover:rotate-3 group-hover:scale-110 sm:h-28 sm:w-28"
+                        class="border-primary/20 relative h-24 w-24 overflow-hidden rounded-[38%] border bg-white shadow-[5px_7px_0_0_rgba(23,59,92,0.12)] transition duration-300 group-hover:-translate-y-3 group-hover:scale-110 group-hover:rotate-3 sm:h-28 sm:w-28"
                         style="clip-path: url(#squircleClip)"
                     >
                         <div
@@ -147,7 +137,7 @@ const socials = [
                     </div>
 
                     <span
-                        class="absolute -bottom-9 left-1/2 -translate-x-1/2 rotate-[-7deg] whitespace-nowrap font-doodle text-xl text-primary"
+                        class="font-doodle text-primary absolute -bottom-9 left-1/2 -translate-x-1/2 rotate-[-7deg] text-xl whitespace-nowrap"
                     >
                         say hello
                     </span>
@@ -159,15 +149,15 @@ const socials = [
                     target="_blank"
                     rel="noopener noreferrer"
                     :aria-label="socials[1].name"
-                    class="group absolute right-[10%] top-[17%] z-10"
+                    class="group absolute top-[17%] right-[10%] z-10"
                 >
                     <div
-                        class="relative h-28 w-28 overflow-hidden rounded-[38%] border border-dark/35 bg-primary shadow-[-5px_7px_0_0_rgba(23,59,92,0.12)] transition duration-300 group-hover:-translate-y-3 group-hover:-rotate-3 group-hover:scale-110 sm:h-32 sm:w-32"
+                        class="border-dark/35 bg-primary relative h-28 w-28 overflow-hidden rounded-[38%] border shadow-[-5px_7px_0_0_rgba(23,59,92,0.12)] transition duration-300 group-hover:-translate-y-3 group-hover:scale-110 group-hover:-rotate-3 sm:h-32 sm:w-32"
                         style="clip-path: url(#squircleClip)"
                     >
                         <svg
                             viewBox="0 0 24 24"
-                            class="absolute inset-0 m-auto h-14 w-14 fill-paper-light sm:h-16 sm:w-16"
+                            class="fill-paper-light absolute inset-0 m-auto h-14 w-14 sm:h-16 sm:w-16"
                             aria-hidden="true"
                         >
                             <path
@@ -177,7 +167,7 @@ const socials = [
                     </div>
 
                     <span
-                        class="absolute -bottom-9 left-1/2 -translate-x-1/2 rotate-[5deg] whitespace-nowrap font-doodle text-xl text-primary"
+                        class="font-doodle text-primary absolute -bottom-9 left-1/2 -translate-x-1/2 rotate-[5deg] text-xl whitespace-nowrap"
                     >
                         let's connect
                     </span>
@@ -192,7 +182,7 @@ const socials = [
                     class="group absolute bottom-[18%] left-[12%] z-10"
                 >
                     <div
-                        class="relative h-28 w-28 overflow-hidden rounded-[38%] border border-primary/20 bg-[#599AD7] shadow-[5px_6px_0_0_rgba(23,59,92,0.12)] transition duration-300 group-hover:-translate-y-3 group-hover:rotate-3 group-hover:scale-110 sm:h-32 sm:w-32"
+                        class="border-primary/20 relative h-28 w-28 overflow-hidden rounded-[38%] border bg-[#599AD7] shadow-[5px_6px_0_0_rgba(23,59,92,0.12)] transition duration-300 group-hover:-translate-y-3 group-hover:scale-110 group-hover:rotate-3 sm:h-32 sm:w-32"
                         style="clip-path: url(#squircleClip)"
                     >
                         <div
@@ -207,7 +197,7 @@ const socials = [
                     </div>
 
                     <span
-                        class="absolute -bottom-10 left-1/2 -translate-x-1/2 rotate-[-4deg] whitespace-nowrap font-doodle text-xl text-primary"
+                        class="font-doodle text-primary absolute -bottom-10 left-1/2 -translate-x-1/2 rotate-[-4deg] text-xl whitespace-nowrap"
                     >
                         hire me maybe?
                     </span>
@@ -219,15 +209,15 @@ const socials = [
                     target="_blank"
                     rel="noopener noreferrer"
                     :aria-label="socials[3].name"
-                    class="group absolute bottom-[15%] right-[9%] z-10"
+                    class="group absolute right-[9%] bottom-[15%] z-10"
                 >
                     <div
-                        class="relative h-28 w-28 overflow-hidden rounded-[38%] border border-dark/35 bg-primary shadow-[-5px_7px_0_0_rgba(23,59,92,0.12)] transition duration-300 group-hover:-translate-y-3 group-hover:-rotate-3 group-hover:scale-110 sm:h-32 sm:w-32"
+                        class="border-dark/35 bg-primary relative h-28 w-28 overflow-hidden rounded-[38%] border shadow-[-5px_7px_0_0_rgba(23,59,92,0.12)] transition duration-300 group-hover:-translate-y-3 group-hover:scale-110 group-hover:-rotate-3 sm:h-32 sm:w-32"
                         style="clip-path: url(#squircleClip)"
                     >
                         <svg
                             viewBox="0 0 24 24"
-                            class="absolute inset-0 m-auto h-14 w-14 fill-paper-light sm:h-16 sm:w-16"
+                            class="fill-paper-light absolute inset-0 m-auto h-14 w-14 sm:h-16 sm:w-16"
                             aria-hidden="true"
                         >
                             <path
@@ -237,7 +227,7 @@ const socials = [
                     </div>
 
                     <span
-                        class="absolute -bottom-10 left-1/2 -translate-x-1/2 rotate-[6deg] whitespace-nowrap font-doodle text-xl text-primary"
+                        class="font-doodle text-primary absolute -bottom-10 left-1/2 -translate-x-1/2 rotate-[6deg] text-xl whitespace-nowrap"
                     >
                         look at my code
                     </span>
