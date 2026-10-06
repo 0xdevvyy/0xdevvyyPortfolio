@@ -14,7 +14,7 @@ it('logins the user', function (): void {
         'password' => 'password',
     ]);
 
-    $response->assertRedirect((route('login.index')));
+    $response->assertRedirect((route('dashboard')));
     $this->actingAs($user);
 
 });

@@ -30,7 +30,7 @@ final readonly class Login
             'message' => 'Login Successful',
         ]);
 
-        return to_route('login.index');
+        return to_route('dashboard');
 
     }
 }
