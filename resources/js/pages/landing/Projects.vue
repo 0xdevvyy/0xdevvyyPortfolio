@@ -8,10 +8,10 @@ interface Tag {
     name: string;
 }
 
-interface Screenshot {
-    id: number;
-    screenshotPath: string;
-}
+// interface Screenshot {
+//     id: number;
+//     screenshotPath: string;
+// }
 
 interface Projects {
     id: number;
@@ -22,7 +22,7 @@ interface Projects {
     description: string;
     features: string[];
     tags: Tag[];
-    screenshots: Screenshot[];
+    // screenshots: Screenshot[];
 }
 
 defineProps<{

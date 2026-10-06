@@ -5,6 +5,7 @@ import NavigationLink from '@/components/ui/navigations/NavigationLink.vue';
 import { aboutMe, contact, dashboard, home } from '@/routes';
 import { Link, usePage } from '@inertiajs/vue3';
 import { index } from '@/routes/project';
+import project from '@/routes/auth/project';
 
 const isMenuOpen = ref(false);
 const isVisible = ref(true);
@@ -25,7 +26,7 @@ const items = computed(() => {
 
     const authenticatedItems = [
         { name: 'Dashboard', href: dashboard() },
-        { name: 'Projects', href: index() },
+        { name: 'Projects', href: project.index() },
         { name: 'About Me', href: aboutMe() },
         { name: 'Contact', href: contact() },
     ];

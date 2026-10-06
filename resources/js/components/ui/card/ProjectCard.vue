@@ -10,10 +10,10 @@ interface Tag {
     name: string;
 }
 
-interface Screenshot {
-    id: number;
-    screenshotPath: string;
-}
+// interface Screenshot {
+//     id: number;
+//     screenshotPath: string;
+// }
 
 interface Project {
     id: number;
@@ -24,7 +24,7 @@ interface Project {
     description: string;
     features: string[];
     tags: Tag[];
-    screenshots: Screenshot[];
+    // screenshots: Screenshot[];
 }
 
 const props = defineProps<{
