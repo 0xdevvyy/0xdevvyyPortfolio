@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\ProjectResource;
 use App\Models\Project;
+use App\Models\Tag;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -38,5 +39,27 @@ class ProjectController extends Controller
         return Inertia::render('project/Index', [
             'projects' => ProjectResource::collection($projects),
         ]);
+    }
+
+    public function edit(string $slug): Response
+    {
+        $project = Project::query()
+            ->with(['tags', 'screenshots'])
+            ->where('slug', $slug)
+            ->firstOrFail();
+
+        $tags = Tag::query()
+            ->orderBy('name')
+            ->get();
+
+        return Inertia::render('project/Edit', [
+            'project' => new ProjectResource($project),
+            'tags' => $tags,
+        ]);
+    }
+
+    public function update(): never
+    {
+        dd(request()->all());
     }
 }

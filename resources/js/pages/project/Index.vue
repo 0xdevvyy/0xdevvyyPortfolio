@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import auth from '@/routes/auth';
 import { Link } from '@inertiajs/vue3';
 import { Eye, Pencil, Plus, Trash2 } from '@lucide/vue';
 
@@ -179,15 +180,7 @@ defineProps<{
                             class="border-border flex items-center gap-2 border-t pt-5 lg:border-0 lg:pt-0"
                         >
                             <Link
-                                :href="`/projects/${project.slug}`"
-                                class="border-ink/15 text-ink/60 hover:border-ink hover:text-ink flex size-10 items-center justify-center rounded-full border transition"
-                                title="View project"
-                            >
-                                <Eye :size="17" />
-                            </Link>
-
-                            <Link
-                                :href="`/projects/${project.id}/edit`"
+                                :href="auth.project.edit(project.slug)"
                                 class="border-ink/15 text-ink/60 hover:bg-primary hover:text-muted flex size-10 items-center justify-center rounded-full border transition"
                                 title="Edit project"
                             >

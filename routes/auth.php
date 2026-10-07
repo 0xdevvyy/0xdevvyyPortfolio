@@ -13,6 +13,8 @@ Route::prefix('auth')->middleware(['auth', 'throttle:30,1'])->group(function ():
 
     Route::prefix('project')->group(function (): void {
         Route::get('/', [ProjectController::class, 'indexAuth'])->name('auth.project.index');
+        Route::get('/{project}/edit', [ProjectController::class, 'edit'])->name('auth.project.edit');
+        Route::put('/{project}/update', [ProjectController::class, 'update'])->name('auth.project.update');
     });
 });
 
