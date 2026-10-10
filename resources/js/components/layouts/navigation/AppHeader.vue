@@ -1,22 +1,38 @@
 <script setup lang="ts">
-import { onMounted, onUnmounted, ref } from 'vue';
+import { computed, onMounted, onUnmounted, ref } from 'vue';
 import NavigationLogo from '@/components/ui/navigations/NavigationLogo.vue';
 import NavigationLink from '@/components/ui/navigations/NavigationLink.vue';
-import { aboutMe, contact, home } from '@/routes';
-import { Link } from '@inertiajs/vue3';
+import { aboutMe, contact, dashboard, home } from '@/routes';
+import { Link, usePage } from '@inertiajs/vue3';
 import { index } from '@/routes/project';
+import project from '@/routes/auth/project';
 
 const isMenuOpen = ref(false);
 const isVisible = ref(true);
 
 let lastScrollY = 0;
 
-const items = [
-    { name: 'Me', href: home() },
-    { name: 'Projects', href: index() },
-    { name: 'About Me', href: aboutMe() },
-    { name: 'Contact', href: contact() },
-];
+const page = usePage();
+
+const isAuthenticated = computed(() => !!page.props.auth?.user);
+
+const items = computed(() => {
+    const guestItems = [
+        { name: 'Me', href: home() },
+        { name: 'Projects', href: index() },
+        { name: 'About Me', href: aboutMe() },
+        { name: 'Contact', href: contact() },
+    ];
+
+    const authenticatedItems = [
+        { name: 'Dashboard', href: dashboard() },
+        { name: 'Projects', href: project.index() },
+        { name: 'About Me', href: aboutMe() },
+        { name: 'Contact', href: contact() },
+    ];
+
+    return isAuthenticated.value ? authenticatedItems : guestItems;
+});
 
 const handleScroll = () => {
     const currentScrollY = window.scrollY;
