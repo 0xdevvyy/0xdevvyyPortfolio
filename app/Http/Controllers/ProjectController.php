@@ -61,5 +61,15 @@ class ProjectController extends Controller
     public function update(): never
     {
         dd(request()->all());
+
+        //create an action 
+        //request->safe()
+
+        //inside an action 
+        //except screenshots and tags
+        //project->update([...$data])
+
+        //if($screenshot) .....$project->screenshots->create([]) ..no update only add 
+        //if(tag) ..... same as the screenshot
     }
 }
