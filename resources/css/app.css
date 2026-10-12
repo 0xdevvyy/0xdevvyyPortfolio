@@ -421,10 +421,6 @@
     @apply border-secondary/30 bg-secondary/5 text-muted-foreground mt-6 flex items-start gap-3 rounded-lg border p-4 text-sm;
 }
 
-
-
-
-
 /*
  * =========================================================
  * PROJECT EDITOR
@@ -515,7 +511,8 @@
     .editor-button-primary {
         background: var(--primary);
         color: var(--primary-foreground);
-        box-shadow: 3px 3px 0 color-mix(in srgb, var(--primary) 18%, transparent);
+        box-shadow: 3px 3px 0
+            color-mix(in srgb, var(--primary) 18%, transparent);
     }
 
     .editor-button-primary:hover:not(:disabled) {
@@ -805,11 +802,11 @@
         transition: transform 180ms ease;
     }
 
-    label:has(input[name="is_published"]:checked) .publish-toggle {
+    label:has(input[name='is_published']:checked) .publish-toggle {
         background: var(--sage);
     }
 
-    label:has(input[name="is_published"]:checked) .publish-toggle-knob {
+    label:has(input[name='is_published']:checked) .publish-toggle-knob {
         transform: translateX(1.25rem);
     }
 
@@ -954,4 +951,3 @@
     background: color-mix(in srgb, var(--red) 12%, var(--card));
     color: var(--red);
 }
-

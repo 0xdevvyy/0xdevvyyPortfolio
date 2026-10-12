@@ -10,21 +10,20 @@ withDefaults(
         error?: string;
         required?: boolean;
         modelValue: string;
-    }>(),{
-        type: 'text',
+    }>(),
+    {
+        type: "text",
         required: true,
-    }
-)
+    },
+);
 
 defineEmits<{
-    'update:modelValue': [value: string];
+    "update:modelValue": [value: string];
 }>();
-
 </script>
 
-
 <template>
-    <div class="min-w-0 ">
+    <div class="min-w-0">
         <label class="form-label">
             {{ label }}
             <span v-if="required" class="text-red">*</span>
@@ -36,12 +35,14 @@ defineEmits<{
             :name="name"
             :required="required"
             class="form-input standalone"
-            @input="$emit(
-                'update:modelValue',
-                ($event.target as HTMLInputElement).value
-            )"
+            @input="
+                $emit(
+                    'update:modelValue',
+                    ($event.target as HTMLInputElement).value,
+                )
+            "
             :value="modelValue"
-        >
+        />
 
         <p v-if="hint" class="field-hint">{{ hint }}</p>
 

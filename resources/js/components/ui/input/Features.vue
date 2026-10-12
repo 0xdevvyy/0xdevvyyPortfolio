@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue';
-import { Check, Plus, Trash2 } from '@lucide/vue';
+import { computed, ref } from "vue";
+import { Check, Plus, Trash2 } from "@lucide/vue";
 
 const features = defineModel<string[]>({
     required: true,
@@ -10,7 +10,7 @@ const props = defineProps<{
     errors?: Record<string, string>;
 }>();
 
-const newFeature = ref('');
+const newFeature = ref("");
 
 const featuresError = computed(() => props.errors?.features);
 
@@ -20,7 +20,7 @@ function addFeature() {
     if (!value) return;
 
     features.value = [...features.value, value];
-    newFeature.value = '';
+    newFeature.value = "";
 }
 
 function removeFeature(index: number) {
@@ -36,10 +36,7 @@ function removeFeature(index: number) {
             class="space-y-1"
         >
             <div class="feature-row">
-                <Check
-                    :size="17"
-                    class="shrink-0 text-muted-foreground"
-                />
+                <Check :size="17" class="shrink-0 text-muted-foreground" />
 
                 <input
                     v-model="features[index]"
@@ -80,18 +77,11 @@ function removeFeature(index: number) {
             </p>
         </div>
 
-        <p
-            v-if="featuresError"
-            class="text-sm text-destructive"
-            role="alert"
-        >
+        <p v-if="featuresError" class="text-sm text-destructive" role="alert">
             {{ featuresError }}
         </p>
 
-        <p
-            v-if="features.length === 0"
-            class="empty-note"
-        >
+        <p v-if="features.length === 0" class="empty-note">
             No features yet. Add your first project feature below.
         </p>
 
@@ -115,10 +105,6 @@ function removeFeature(index: number) {
             </button>
         </div>
 
-        <input
-            type="hidden"
-            name="features_present"
-            value="1"
-        />
+        <input type="hidden" name="features_present" value="1" />
     </div>
 </template>
