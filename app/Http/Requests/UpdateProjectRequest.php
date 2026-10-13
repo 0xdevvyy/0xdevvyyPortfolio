@@ -32,6 +32,7 @@ class UpdateProjectRequest extends FormRequest
                 'required',
                 'string',
                 'max:255',
+                'regex:/^[a-z0-9]+(?:-[a-z0-9]+)*$/',
                 Rule::unique('projects', 'slug')->ignore($this->route('project')),
             ],
 

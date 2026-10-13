@@ -68,7 +68,7 @@ class ProjectController extends Controller
 
         Inertia::flash('toast', [
             'type' => 'success',
-            'message' => 'Project Updated Successfully!',
+            'message' => 'Successfully Updated',
         ]);
 
         return to_route('auth.project.edit', $project->slug);

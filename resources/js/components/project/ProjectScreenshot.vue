@@ -9,7 +9,7 @@ interface Screenshot {
 
 const props = defineProps<{
     screenshots: Screenshot[];
-    projectTitle: string;
+    projectTitle?: string;
 }>();
 
 const selectedScreenshot = ref<Screenshot | null>(null);

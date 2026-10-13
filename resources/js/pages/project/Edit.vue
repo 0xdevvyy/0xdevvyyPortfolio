@@ -1,10 +1,13 @@
 <script setup lang="ts">
 import ProjectTag from '@/components/project/ProjectTag.vue';
+import Delete from '@/components/ui/dialog/Delete.vue';
+import Screenshot from '@/components/ui/images/Screenshot.vue';
 import Features from '@/components/ui/input/Features.vue';
+import Image from '@/components/ui/input/Image.vue';
 import Text from '@/components/ui/input/Text.vue';
 import TextArea from '@/components/ui/input/TextArea.vue';
 import auth from '@/routes/auth';
-import { Head, Link, useForm } from '@inertiajs/vue3';
+import { Head, Link, router, useForm } from '@inertiajs/vue3';
 import {
     ArrowLeft,
     CalendarDays,
@@ -18,6 +21,7 @@ import {
     Upload,
     X,
 } from '@lucide/vue';
+import { ref } from 'vue';
 
 interface Screenshot {
     id: number;
@@ -65,6 +69,39 @@ const form = useForm({
 function submit() {
     form.put(auth.project.update(props.project.id).url, {
         preserveScroll: true,
+    });
+}
+
+const isDeleteDialogOpen = ref(false);
+const selectedScreenshotId = ref<number | null>(null);
+const isDeleting = ref(false);
+
+function openDeleteDialog(screenshotId: number) {
+    selectedScreenshotId.value = screenshotId;
+    isDeleteDialogOpen.value = true;
+}
+
+function closeDeleteDialog() {
+    if (isDeleting.value) return;
+
+    isDeleteDialogOpen.value = false;
+    selectedScreenshotId.value = null;
+}
+
+function deleteScreenshot() {
+    if (selectedScreenshotId.value === null) return;
+
+    isDeleting.value = true;
+
+    router.delete(auth.screenshot.delete(selectedScreenshotId.value).url, {
+        preserveScroll: true,
+        onSuccess: () => {
+            isDeleteDialogOpen.value = false;
+            selectedScreenshotId.value = null;
+        },
+        onFinish: () => {
+            isDeleting.value = false;
+        },
     });
 }
 </script>
@@ -230,53 +267,18 @@ function submit() {
                                         {{ project.screenshots.length }} images
                                     </span>
                                 </div>
+                                <Screenshot
+                                    :screenshots="project.screenshots"
+                                />
 
-                                <div
-                                    v-if="project.screenshots.length"
-                                    class="grid grid-cols-2 gap-3 sm:grid-cols-3"
-                                >
-                                    <div
-                                        v-for="screenshot in project.screenshots"
-                                        :key="screenshot.id"
-                                        class="screenshot-item"
-                                    >
-                                        <img
-                                            :src="
-                                                screenshot.screenshotPath.startsWith(
-                                                    '/',
-                                                ) ||
-                                                screenshot.screenshotPath.startsWith(
-                                                    'http',
-                                                )
-                                                    ? screenshot.screenshotPath
-                                                    : `/storage/${screenshot.screenshotPath}`
-                                            "
-                                            :alt="`Project screenshot ${screenshot.id}`"
-                                            class="screenshot-image"
-                                        />
-
-                                        <span class="screenshot-caption">
-                                            Existing image
-                                        </span>
-                                    </div>
-                                </div>
-
-                                <div v-else class="empty-note">
-                                    No screenshots added yet. Add screenshots to
-                                    showcase your project.
-                                </div>
-
-                                <div class="upload-zone">
-                                    <Upload :size="25" />
-
-                                    <span class="font-semibold">
-                                        Add project screenshots
-                                    </span>
-
-                                    <span class="text-muted-foreground text-xs">
-                                        PNG, JPG or WEBP
-                                    </span>
-                                </div>
+                                <Delete
+                                    :open="isDeleteDialogOpen"
+                                    title="Delete screenshot?"
+                                    description="Are you sure you want to delete this screenshot? This action cannot be undone."
+                                    :processing="isDeleting"
+                                    @confirm="deleteScreenshot"
+                                    @cancel="closeDeleteDialog"
+                                />
                             </div>
                         </section>
                     </div>
