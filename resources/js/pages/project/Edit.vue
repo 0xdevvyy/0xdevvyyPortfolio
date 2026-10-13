@@ -1,9 +1,10 @@
 <script setup lang="ts">
+import ProjectTag from '@/components/project/ProjectTag.vue';
 import Features from '@/components/ui/input/Features.vue';
 import Text from '@/components/ui/input/Text.vue';
 import TextArea from '@/components/ui/input/TextArea.vue';
 import auth from '@/routes/auth';
-import { Form, Head, Link, useForm } from '@inertiajs/vue3';
+import { Head, Link, useForm } from '@inertiajs/vue3';
 import {
     ArrowLeft,
     CalendarDays,
@@ -70,7 +71,7 @@ function submit() {
 
 <template>
     <Head :title="`Edit ${project.title}`" />
-    
+
     <div
         class="project-editor-page mx-auto w-full max-w-7xl space-y-8 px-4 py-8 sm:px-6 lg:px-8"
     >
@@ -195,94 +196,8 @@ function submit() {
                             </div>
                         </section>
 
-                        <!-- A placeholder or now  -->
-                        <section class="editor-panel">
-                            <div class="panel-heading">
-                                <div class="panel-icon">
-                                    <TagIcon :size="19" />
-                                </div>
-
-                                <div>
-                                    <h2 class="panel-title">Project Tags</h2>
-
-                                    <p class="panel-description">
-                                        Select the technologies and topics used
-                                        in your project.
-                                    </p>
-                                </div>
-                            </div>
-
-                            <div class="space-y-4">
-                                <div
-                                    class="flex items-center justify-between gap-3"
-                                >
-                                    <p class="text-sm font-medium">
-                                        Available tags
-                                    </p>
-
-                                    <span class="field-hint">
-                                        {{ project.tags.length }} selected
-                                    </span>
-                                </div>
-
-                                <div class="flex flex-wrap gap-2">
-                                    <span
-                                        v-for="tag in tags"
-                                        :key="tag.id"
-                                        class="tag-choice"
-                                        :class="{
-                                            'tag-choice-selected':
-                                                project.tags.some(
-                                                    (selectedTag) =>
-                                                        selectedTag.id ===
-                                                        tag.id,
-                                                ),
-                                        }"
-                                    >
-                                        {{ tag.name }}
-
-                                        <Check
-                                            v-if="
-                                                project.tags.some(
-                                                    (selectedTag) =>
-                                                        selectedTag.id ===
-                                                        tag.id,
-                                                )
-                                            "
-                                            :size="14"
-                                        />
-                                    </span>
-                                </div>
-
-                                <div class="tag-preview">
-                                    <span
-                                        class="text-muted-foreground text-xs font-semibold"
-                                    >
-                                        SELECTED
-                                    </span>
-
-                                    <div
-                                        v-if="project.tags.length"
-                                        class="flex flex-wrap gap-2"
-                                    >
-                                        <span
-                                            v-for="tag in project.tags"
-                                            :key="tag.id"
-                                            class="tag-chip"
-                                        >
-                                            {{ tag.name }}
-                                        </span>
-                                    </div>
-
-                                    <p
-                                        v-else
-                                        class="text-muted-foreground text-sm"
-                                    >
-                                        No tags selected.
-                                    </p>
-                                </div>
-                            </div>
-                        </section>
+                        <!-- Tags  -->
+                        <ProjectTag v-model="form.tags" :tags="props.tags" />
 
                         <!-- this screenshot will also be a placeholder for now -->
                         <section class="editor-panel">

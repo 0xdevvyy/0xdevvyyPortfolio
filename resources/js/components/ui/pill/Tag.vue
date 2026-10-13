@@ -1,3 +1,11 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+defineProps<{
+    name: string;
+}>();
+</script>
 
-<template></template>
+<template>
+    <span class="tag-chip">
+        {{ name }}
+    </span>
+</template>

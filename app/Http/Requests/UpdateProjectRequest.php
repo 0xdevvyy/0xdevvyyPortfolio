@@ -51,6 +51,9 @@ class UpdateProjectRequest extends FormRequest
             ],
 
             // tegs and screenshots are next...
+            'tags' => ['array'],
+            'tags.*' => ['required', 'exists:tags,id'],
+
         ];
     }
 }

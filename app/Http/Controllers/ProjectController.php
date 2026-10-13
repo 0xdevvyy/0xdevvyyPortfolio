@@ -63,6 +63,7 @@ class ProjectController extends Controller
 
     public function update(UpdateProjectRequest $request, Project $project, Update $action): RedirectResponse
     {
+        $attr = $request->safe()->except(['tags']);
         $action->update($request->safe()->all(), $project);
 
         Inertia::flash('toast', [
@@ -74,5 +75,10 @@ class ProjectController extends Controller
 
         // if($screenshot) .....$project->screenshots->create([]) ..no update only add
         // if(tag) ..... same as the screenshot
+
+        // second approach:
+
+        // if(screenshot){$screenshot->create($request->safe()->only('screenshots'))}
+        // the tag can be added in the update action because it is a pivot table i can just sync it
     }
 }
