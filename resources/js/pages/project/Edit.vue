@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import ProjectTag from '@/components/project/ProjectTag.vue';
-import Delete from '@/components/ui/dialog/Delete.vue';
 import Screenshot from '@/components/ui/images/Screenshot.vue';
 import Features from '@/components/ui/input/Features.vue';
 import Image from '@/components/ui/input/Image.vue';
@@ -15,11 +14,9 @@ import {
     Eye,
     FileText,
     Image as ImageIcon,
-    Save,
     Star,
     Tag as TagIcon,
     Upload,
-    X,
 } from '@lucide/vue';
 import { ref } from 'vue';
 
@@ -45,13 +42,15 @@ interface Project {
     publishedAt: string | null;
     screenshots: Screenshot[];
     tags: Tag[];
-    projectUrl?: string | null;
+    // projectUrl?: string | null;
 }
 
 const props = defineProps<{
     project: Project;
     tags: Tag[];
 }>();
+
+const newScreenshots = ref<File[]>([]);
 
 const form = useForm({
     title: props.project.title,
@@ -67,41 +66,10 @@ const form = useForm({
 });
 
 function submit() {
+    form.screenshots = [...newScreenshots.value];
     form.put(auth.project.update(props.project.id).url, {
+        // forceFormData: true,
         preserveScroll: true,
-    });
-}
-
-const isDeleteDialogOpen = ref(false);
-const selectedScreenshotId = ref<number | null>(null);
-const isDeleting = ref(false);
-
-function openDeleteDialog(screenshotId: number) {
-    selectedScreenshotId.value = screenshotId;
-    isDeleteDialogOpen.value = true;
-}
-
-function closeDeleteDialog() {
-    if (isDeleting.value) return;
-
-    isDeleteDialogOpen.value = false;
-    selectedScreenshotId.value = null;
-}
-
-function deleteScreenshot() {
-    if (selectedScreenshotId.value === null) return;
-
-    isDeleting.value = true;
-
-    router.delete(auth.screenshot.delete(selectedScreenshotId.value).url, {
-        preserveScroll: true,
-        onSuccess: () => {
-            isDeleteDialogOpen.value = false;
-            selectedScreenshotId.value = null;
-        },
-        onFinish: () => {
-            isDeleting.value = false;
-        },
     });
 }
 </script>
@@ -235,7 +203,6 @@ function deleteScreenshot() {
 
                         <!-- Tags  -->
                         <ProjectTag v-model="form.tags" :tags="props.tags" />
-
                         <!-- this screenshot will also be a placeholder for now -->
                         <section class="editor-panel">
                             <div class="panel-heading">
@@ -271,13 +238,16 @@ function deleteScreenshot() {
                                     :screenshots="project.screenshots"
                                 />
 
-                                <Delete
-                                    :open="isDeleteDialogOpen"
-                                    title="Delete screenshot?"
-                                    description="Are you sure you want to delete this screenshot? This action cannot be undone."
-                                    :processing="isDeleting"
-                                    @confirm="deleteScreenshot"
-                                    @cancel="closeDeleteDialog"
+                                <Image
+                                    title="Input Project Screenshots"
+                                    :error="
+                                        Object.entries(form.errors)
+                                            .filter(([key]) =>
+                                                /^screenshots\.\d+$/.test(key),
+                                            )
+                                            .map(([, message]) => message)
+                                    "
+                                    v-model="newScreenshots"
                                 />
                             </div>
                         </section>
@@ -307,16 +277,7 @@ function deleteScreenshot() {
                                     class="thumbnail-preview"
                                 >
                                     <img
-                                        :src="
-                                            project.thumbnailPath.startsWith(
-                                                '/',
-                                            ) ||
-                                            project.thumbnailPath.startsWith(
-                                                'http',
-                                            )
-                                                ? project.thumbnailPath
-                                                : `/storage/${project.thumbnailPath}`
-                                        "
+                                        :src="project.thumbnailPath"
                                         :alt="`${project.title} thumbnail`"
                                         class="aspect-video w-full rounded-lg object-cover"
                                     />
@@ -429,12 +390,7 @@ function deleteScreenshot() {
                             <div class="quick-preview">
                                 <img
                                     v-if="project.thumbnailPath"
-                                    :src="
-                                        project.thumbnailPath.startsWith('/') ||
-                                        project.thumbnailPath.startsWith('http')
-                                            ? project.thumbnailPath
-                                            : `/storage/${project.thumbnailPath}`
-                                    "
+                                    :src="project.thumbnailPath"
                                     :alt="`${project.title} preview`"
                                     class="border-border aspect-video w-full rounded-md border object-cover"
                                 />

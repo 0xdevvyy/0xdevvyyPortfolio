@@ -63,7 +63,7 @@ class ProjectController extends Controller
 
     public function update(UpdateProjectRequest $request, Project $project, Update $action): RedirectResponse
     {
-        $attr = $request->safe()->except(['tags']);
+        // dd($request->safe()->all());
         $action->update($request->safe()->all(), $project);
 
         Inertia::flash('toast', [

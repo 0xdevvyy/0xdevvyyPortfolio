@@ -26,19 +26,19 @@ class UpdateProjectRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => ['required', 'string', 'max:255'],
+            'title' => ['required', 'string', 'min:8', 'max:255'],
 
             'slug' => [
                 'required',
                 'string',
                 'max:255',
-                'regex:/^[a-z0-9]+(?:-[a-z0-9]+)*$/',
+                'regex:/^[a-z0-9]+(?:-[a-z0-9]+)*$/', // create a rule? note: next will learn about self healing slug
                 Rule::unique('projects', 'slug')->ignore($this->route('project')),
             ],
 
-            'description' => ['required', 'string'],
+            'description' => ['required', 'string', 'min:8', 'max:500'],
 
-            'excerpt' => ['nullable', 'string', 'max:500'],
+            'excerpt' => ['nullable', 'string', 'min:8', 'max:500'],
 
             'features' => ['nullable', 'array'],
             'features.*' => ['required', 'string', 'max:255'],
@@ -54,6 +54,9 @@ class UpdateProjectRequest extends FormRequest
             // tegs and screenshots are next...
             'tags' => ['array'],
             'tags.*' => ['required', 'exists:tags,id'],
+
+            'screenshots' => ['array'],
+            'screenshots.*' => ['required', 'image', 'mimes:png,jpg,jpeg,webp', 'max:1024'],
 
         ];
     }

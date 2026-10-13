@@ -7,6 +7,7 @@ namespace App\Http\Resources;
 use App\Models\Screenshot;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\Storage;
 
 /**
  * @mixin Screenshot
@@ -22,7 +23,7 @@ class ScreenshotResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'screenshotPath' => $this->screenshot_path,
+            'screenshotPath' => asset(Storage::url($this->screenshot_path)),
         ];
     }
 }
