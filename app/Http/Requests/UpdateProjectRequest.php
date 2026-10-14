@@ -36,6 +36,8 @@ class UpdateProjectRequest extends FormRequest
                 Rule::unique('projects', 'slug')->ignore($this->route('project')),
             ],
 
+            'thumbnail_path' => ['nullable', 'image', 'mimes:png,jpg,jpeg,webp', 'max:1024'],
+
             'description' => ['required', 'string', 'min:8', 'max:500'],
 
             'excerpt' => ['nullable', 'string', 'min:8', 'max:500'],

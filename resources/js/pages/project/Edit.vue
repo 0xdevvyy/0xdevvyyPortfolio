@@ -3,6 +3,8 @@ import ProjectTag from '@/components/project/ProjectTag.vue';
 import Screenshot from '@/components/ui/images/Screenshot.vue';
 import Features from '@/components/ui/input/Features.vue';
 import Image from '@/components/ui/input/Image.vue';
+import ImageThumbnail from '@/components/ui/input/ImageThumbnail.vue';
+import Switch from '@/components/ui/input/Switch.vue';
 import Text from '@/components/ui/input/Text.vue';
 import TextArea from '@/components/ui/input/TextArea.vue';
 import auth from '@/routes/auth';
@@ -271,35 +273,10 @@ function submit() {
                                 </div>
                             </div>
 
-                            <div class="space-y-4">
-                                <div
-                                    v-if="project.thumbnailPath"
-                                    class="thumbnail-preview"
-                                >
-                                    <img
-                                        :src="project.thumbnailPath"
-                                        :alt="`${project.title} thumbnail`"
-                                        class="aspect-video w-full rounded-lg object-cover"
-                                    />
-
-                                    <div class="thumbnail-change">
-                                        <Upload :size="15" />
-                                        Change Image
-                                    </div>
-                                </div>
-
-                                <div v-else class="upload-zone min-h-44">
-                                    <ImageIcon :size="30" />
-
-                                    <span class="font-semibold">
-                                        Upload thumbnail
-                                    </span>
-
-                                    <span class="text-muted-foreground text-xs">
-                                        Click to choose an image
-                                    </span>
-                                </div>
-                            </div>
+                            <ImageThumbnail
+                                :project="project"
+                                @update:thumbnail="form.thumbnail_path = $event"
+                            />
                         </section>
 
                         <section class="editor-panel">
@@ -334,20 +311,27 @@ function submit() {
                                         </p>
                                     </div>
 
-                                    <span
-                                        class="publish-toggle"
+                                    <label
+                                        class="publish-toggle cursor-pointer"
                                         :class="{
-                                            'is-published': project.isPublished,
+                                            'is-published': form.is_published,
                                         }"
                                     >
+                                        <Switch
+                                            id="is-published"
+                                            name="is_published"
+                                            v-model="form.is_published"
+                                            :error="form.errors.is_published"
+                                        />
+
                                         <span
                                             class="publish-toggle-knob"
                                             :class="{
                                                 'is-published':
-                                                    project.isPublished,
+                                                    form.is_published,
                                             }"
                                         />
-                                    </span>
+                                    </label>
                                 </div>
 
                                 <div>

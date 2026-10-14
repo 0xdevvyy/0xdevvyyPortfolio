@@ -17,21 +17,17 @@ class Update
      */
     public function update(array $data, Project $project): void
     {
-        // dd($data['screenshots']);
-        $attr = Arr::except($data, ['tags', 'screenshots']);
 
-        // dd(...$data['tags']);
-        $project->update([...$attr]);
-        $project->tags()->sync([...$data['tags']]);
+        // dd($data);
+        // do i still need to wrap it up in DB:transaction?
+        $thumbnailPath = $data['thumbnail_path']?->store('thumbnail', 'public') ?? $project->thumbnail_path;
 
-        // foreach($data['screenshots'] as $screenshot){
-        //     $imagePath = $screenshot->screenshots()->store('projectScreenshots', 'public');
+        $attr = Arr::except($data, ['tags', 'screenshots', 'thumbnail_path']);
 
-        // }
+        $project->update([...$attr, 'thumbnail_path' => $thumbnailPath]);
+        $project->tags()->sync($data['tags'] ?? []);
 
-        $this->createScreenshots->create($data['screenshots'], $project);
+        $this->createScreenshots->create($data['screenshots'] ?? [], $project);
 
-        // will create an action where i can pass the data of screenshot and also the project
-        // so i can $project->screenshots()->create([])
     }
 }

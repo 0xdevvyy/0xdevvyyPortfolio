@@ -779,7 +779,6 @@
     .thumbnail-change:hover {
         background: var(--muted);
     }
-
     .publish-toggle {
         position: relative;
         display: inline-flex;
@@ -793,6 +792,10 @@
         transition: background-color 180ms ease;
     }
 
+    .publish-toggle.is-published {
+        background: #22c55e;
+    }
+
     .publish-toggle-knob {
         width: 1.125rem;
         height: 1.125rem;
@@ -800,6 +803,10 @@
         background: var(--card);
         box-shadow: 0 1px 2px rgb(0 0 0 / 15%);
         transition: transform 180ms ease;
+    }
+
+    .publish-toggle-knob.is-published {
+        transform: translateX(1.25rem);
     }
 
     label:has(input[name='is_published']:checked) .publish-toggle {
