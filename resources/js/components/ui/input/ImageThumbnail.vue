@@ -2,17 +2,15 @@
 import { ref, onUnmounted } from "vue";
 import { Image as ImageIcon, Upload } from "@lucide/vue";
 
-interface Project {
-    title: string;
-    thumbnailPath: string | null;
-}
-
 defineProps<{
-    project: Project;
+    title?: string;
+    thumbnailPath?: string | null;
+    modelValue: File | null;
+    error?: string;
 }>();
 
 const emit = defineEmits<{
-    "update:thumbnail": [file: File | null];
+    "update:modelValue": [file: File | null];
 }>();
 
 const thumbnailInput = ref<HTMLInputElement | null>(null);
@@ -29,7 +27,7 @@ function handleThumbnailChange(event: Event) {
     }
 
     previewUrl.value = URL.createObjectURL(file);
-    emit("update:thumbnail", file);
+    emit("update:modelValue", file);
 }
 
 onUnmounted(() => {
@@ -40,7 +38,7 @@ onUnmounted(() => {
 </script>
 
 <template>
-    <div class="space-y-4">
+    <div class="space-y-3">
         <input
             ref="thumbnailInput"
             type="file"
@@ -49,35 +47,41 @@ onUnmounted(() => {
             @change="handleThumbnailChange"
         />
 
-        <div
-            v-if="previewUrl || project.thumbnailPath"
-            class="thumbnail-preview cursor-pointer"
+        <button
+            v-if="previewUrl || thumbnailPath"
+            type="button"
+            class="thumbnail-preview group relative block w-full overflow-hidden rounded-lg"
             @click="thumbnailInput?.click()"
         >
             <img
-                :src="previewUrl ?? project.thumbnailPath!"
-                :alt="`${project.title} thumbnail`"
+                :src="previewUrl ?? thumbnailPath!"
+                :alt="`${title ?? 'Project'} thumbnail`"
                 class="aspect-video w-full rounded-lg object-cover"
             />
 
-            <div class="thumbnail-change">
+            <span class="thumbnail-change cursor-pointer mt-2">
                 <Upload :size="15" />
                 Change Image
-            </div>
-        </div>
+            </span>
+        </button>
 
-        <div
+        <button
             v-else
-            class="upload-zone min-h-44 cursor-pointer"
+            type="button"
+            class="upload-zone flex min-h-44 w-full flex-col items-center justify-center gap-3 rounded-lg cursor-pointer"
             @click="thumbnailInput?.click()"
         >
             <ImageIcon :size="30" />
 
-            <span class="font-semibold"> Upload thumbnail </span>
+            <span class="font-semibold">Upload thumbnail</span>
 
             <span class="text-muted-foreground text-xs">
                 Click to choose an image
             </span>
-        </div>
+        </button>
+
+        <p v-if="error" class="text-destructive text-sm">
+            {{ error }}
+        </p>
     </div>
 </template>

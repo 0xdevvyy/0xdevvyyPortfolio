@@ -4,11 +4,17 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Action\Project\Create;
+use App\Action\Project\Delete;
 use App\Action\Project\Update;
+use App\Http\Requests\StoreProjectRequest;
 use App\Http\Requests\UpdateProjectRequest;
 use App\Http\Resources\ProjectResource;
+use App\Http\Resources\TagResource;
 use App\Models\Project;
 use App\Models\Tag;
+use App\Models\User;
+use Illuminate\Container\Attributes\Authenticated;
 use Illuminate\Http\RedirectResponse;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -17,7 +23,7 @@ class ProjectController extends Controller
 {
     public function index(): Response
     {
-        $projects = Project::query()->with('tags')->where('is_published', true)->get(); // testing first, then i will add it in a query class. ex: isPublished
+        $projects = Project::query()->with('tags')->where('is_published', true)->latest()->get(); // testing first, then i will add it in a query class. ex: isPublished
 
         return Inertia::render('landing/Projects', [
             'projects' => ProjectResource::collection($projects),
@@ -37,7 +43,7 @@ class ProjectController extends Controller
 
     public function indexAuth(): Response
     {
-        $projects = Project::query()->with('tags')->get();
+        $projects = Project::query()->with('tags')->latest()->get();
 
         return Inertia::render('project/Index', [
             'projects' => ProjectResource::collection($projects),
@@ -57,13 +63,13 @@ class ProjectController extends Controller
 
         return Inertia::render('project/Edit', [
             'project' => new ProjectResource($project),
-            'tags' => $tags,
+            'tags' => TagResource::collection($tags),
         ]);
     }
 
     public function update(UpdateProjectRequest $request, Project $project, Update $action): RedirectResponse
     {
-        // dd($request->safe()->all());
+
         $action->update($request->safe()->all(), $project);
 
         Inertia::flash('toast', [
@@ -72,13 +78,40 @@ class ProjectController extends Controller
         ]);
 
         return to_route('auth.project.edit', $project->slug);
+    }
 
-        // if($screenshot) .....$project->screenshots->create([]) ..no update only add
-        // if(tag) ..... same as the screenshot
+    public function create(): Response
+    {
+        $tags = Tag::query()
+            ->orderBy('name')
+            ->get();
 
-        // second approach:
+        return Inertia::render('project/Create', [
+            'tags' => TagResource::collection($tags),
+        ]);
+    }
 
-        // if(screenshot){$screenshot->create($request->safe()->only('screenshots'))}
-        // the tag can be added in the update action because it is a pivot table i can just sync it
+    public function store(StoreProjectRequest $request, #[Authenticated()] User $user, Create $action): RedirectResponse
+    {
+        $action->handle($request->safe()->all(), $user);
+
+        Inertia::flash('toast', [
+            'type' => 'success',
+            'message' => 'Project Successfully Created!!',
+        ]);
+
+        return to_route('auth.project.index');
+    }
+
+    public function delete(Project $project, Delete $action): RedirectResponse
+    {
+        $action->delete($project);
+
+        Inertia::flash('toast', [
+            'type' => 'success',
+            'message' => 'Project Successfully Deleted!!',
+        ]);
+
+        return to_route('auth.project.index');
     }
 }

@@ -274,7 +274,10 @@ function submit() {
                             </div>
 
                             <ImageThumbnail
-                                :project="project"
+                                v-model="form.thumbnail_path"
+                                :title="project.title"
+                                :thumbnail-path="project.thumbnailPath"
+                                :error="form.errors.thumbnail_path"
                                 @update:thumbnail="form.thumbnail_path = $event"
                             />
                         </section>
