@@ -7,8 +7,10 @@ namespace App\Action\Project;
 use App\Action\Screenshot\Create;
 use App\Models\Project;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
-class Update
+final readonly class Update
 {
     public function __construct(public Create $createScreenshots) {}
 
@@ -18,16 +20,24 @@ class Update
     public function update(array $data, Project $project): void
     {
 
-        // dd($data);
-        // do i still need to wrap it up in DB:transaction?
-        $thumbnailPath = $data['thumbnail_path']?->store('thumbnail', 'public') ?? $project->thumbnail_path;
+        DB::transaction(function () use ($data, $project): void {
+            if ($data['thumbnail_path'] ?? null) {
+                if ($project->thumbnail_path) {
+                    Storage::disk('public')->delete($project->thumbnail_path);
+                }
 
-        $attr = Arr::except($data, ['tags', 'screenshots', 'thumbnail_path']);
+                $data['thumbnail_path'] = $data['thumbnail_path']->store('thumbnail', 'public');
+            } else {
+                unset($data['thumbnail_path']);
+            }
 
-        $project->update([...$attr, 'thumbnail_path' => $thumbnailPath]);
-        $project->tags()->sync($data['tags'] ?? []);
+            $attr = Arr::except($data, ['tags', 'screenshots']);
 
-        $this->createScreenshots->create($data['screenshots'] ?? [], $project);
+            $project->update($attr);
+            $project->tags()->sync($data['tags'] ?? []);
+
+            $this->createScreenshots->create($data['screenshots'] ?? [], $project);
+        });
 
     }
 }

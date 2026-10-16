@@ -6,7 +6,7 @@ namespace App\Action\Screenshot;
 
 use App\Models\Screenshot;
 
-class Delete
+final readonly class Delete
 {
     public function delete(Screenshot $screenshot): void
     {

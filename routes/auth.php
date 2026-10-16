@@ -14,10 +14,16 @@ Route::prefix('auth')->middleware(['auth', 'throttle:30,1'])->group(function ():
 
     Route::prefix('project')->group(function (): void {
         Route::get('/', [ProjectController::class, 'indexAuth'])->name('auth.project.index');
+
+        Route::get('/create', [ProjectController::class, 'create'])->name('auth.project.create');
+        Route::post('/store', [ProjectController::class, 'store'])->name('auth.project.store');
         Route::get('/{project}/edit', [ProjectController::class, 'edit'])->name('auth.project.edit');
         Route::put('/{project}/update', [ProjectController::class, 'update'])->name('auth.project.update');
 
+        Route::delete('/{project}/delete', [ProjectController::class, 'delete'])->name('auth.project.delete');
+
         Route::delete('/{screenshot}/delete', [ScreenshotController::class, 'destroy'])->name('auth.screenshot.delete');
+
     });
 });
 

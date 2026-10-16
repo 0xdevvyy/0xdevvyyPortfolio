@@ -1,7 +1,9 @@
 <script setup lang="ts">
+import { ref } from 'vue';
+import { Link, router } from '@inertiajs/vue3';
 import auth from '@/routes/auth';
-import { Link } from '@inertiajs/vue3';
-import { Eye, Pencil, Plus, Trash2 } from '@lucide/vue';
+import { Pencil, Plus, Trash2 } from '@lucide/vue';
+import DeleteDialog from '@/components/ui/dialog/Delete.vue';
 
 interface Tag {
     id: number;
@@ -12,7 +14,7 @@ interface Project {
     id: number;
     title: string;
     slug: string;
-    thumbnailPath: string;
+    thumbnailPath: string | null;
     excerpt: string;
     tags: Tag[];
     isPublished: boolean;
@@ -22,6 +24,41 @@ interface Project {
 defineProps<{
     projects: Project[];
 }>();
+
+const selectedProject = ref<Project | null>(null);
+const isDeleteDialogOpen = ref(false);
+const isDeleting = ref(false);
+
+function openDeleteDialog(project: Project) {
+    selectedProject.value = project;
+    isDeleteDialogOpen.value = true;
+}
+
+function closeDeleteDialog() {
+    if (isDeleting.value) return;
+
+    isDeleteDialogOpen.value = false;
+    selectedProject.value = null;
+}
+
+function deleteProject() {
+    const project = selectedProject.value;
+
+    if (!project || isDeleting.value) return;
+
+    isDeleting.value = true;
+
+    router.delete(auth.project.delete(project.id).url, {
+        preserveScroll: true,
+        onSuccess: () => {
+            isDeleteDialogOpen.value = false;
+            selectedProject.value = null;
+        },
+        onFinish: () => {
+            isDeleting.value = false;
+        },
+    });
+}
 </script>
 
 <template>
@@ -58,7 +95,7 @@ defineProps<{
                 </div>
 
                 <Link
-                    href="/projects/create"
+                    :href="auth.project.create()"
                     class="bg-ink text-paper inline-flex w-fit items-center gap-2 rounded-lg px-5 py-3 font-mono text-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[4px_4px_0_var(--gold)]"
                 >
                     <Plus :size="17" />
@@ -108,7 +145,6 @@ defineProps<{
                                         {{ project.title.charAt(0) }}
                                     </span>
                                 </div>
-                                <pre>{{ project.thumbnailPath }}</pre>
                             </div>
                         </div>
 
@@ -189,8 +225,10 @@ defineProps<{
 
                             <button
                                 type="button"
-                                class="border-red/20 text-red/60 hover:bg-red hover:text-paper flex size-10 cursor-pointer items-center justify-center rounded-full border transition"
+                                class="border-red/20 text-red/60 hover:bg-red hover:text-paper flex size-10 cursor-pointer items-center justify-center rounded-full border transition disabled:cursor-not-allowed disabled:opacity-50"
                                 title="Delete project"
+                                :disabled="isDeleting"
+                                @click="openDeleteDialog(project)"
                             >
                                 <Trash2 :size="16" />
                             </button>
@@ -219,7 +257,7 @@ defineProps<{
                 </p>
 
                 <Link
-                    href="/projects/create"
+                    :href="auth.project.create()"
                     class="text-ink decoration-gold mt-6 inline-flex items-center gap-2 font-mono text-sm underline decoration-2 underline-offset-4"
                 >
                     <Plus :size="16" />
@@ -227,5 +265,14 @@ defineProps<{
                 </Link>
             </div>
         </div>
+
+        <DeleteDialog
+            :open="isDeleteDialogOpen"
+            :title="`Delete ${selectedProject?.title ?? 'project'}?`"
+            description="This will permanently delete this project. This action cannot be undone."
+            :processing="isDeleting"
+            @confirm="deleteProject"
+            @cancel="closeDeleteDialog"
+        />
     </section>
 </template>
