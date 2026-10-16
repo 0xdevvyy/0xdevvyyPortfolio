@@ -23,7 +23,7 @@ final readonly class Create
     public function handle(array $data, User $user): Project
     {
         return DB::transaction(function () use ($data, $user): Project {
-            $thumbnail = $data['thumbnail_path'] ?? null;
+            $thumbnail = $data['thumbnail_path'];
 
             $thumbnailPath = $thumbnail instanceof UploadedFile
                 ? $thumbnail->store('thumbnails', 'public')
