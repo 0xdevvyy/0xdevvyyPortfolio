@@ -4,9 +4,12 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Action\Project\Update;
+use App\Http\Requests\UpdateProjectRequest;
 use App\Http\Resources\ProjectResource;
 use App\Models\Project;
 use App\Models\Tag;
+use Illuminate\Http\RedirectResponse;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -58,18 +61,24 @@ class ProjectController extends Controller
         ]);
     }
 
-    public function update(): never
+    public function update(UpdateProjectRequest $request, Project $project, Update $action): RedirectResponse
     {
-        dd(request()->all());
+        // dd($request->safe()->all());
+        $action->update($request->safe()->all(), $project);
 
-        //create an action 
-        //request->safe()
+        Inertia::flash('toast', [
+            'type' => 'success',
+            'message' => 'Successfully Updated',
+        ]);
 
-        //inside an action 
-        //except screenshots and tags
-        //project->update([...$data])
+        return to_route('auth.project.edit', $project->slug);
 
-        //if($screenshot) .....$project->screenshots->create([]) ..no update only add 
-        //if(tag) ..... same as the screenshot
+        // if($screenshot) .....$project->screenshots->create([]) ..no update only add
+        // if(tag) ..... same as the screenshot
+
+        // second approach:
+
+        // if(screenshot){$screenshot->create($request->safe()->only('screenshots'))}
+        // the tag can be added in the update action because it is a pivot table i can just sync it
     }
 }

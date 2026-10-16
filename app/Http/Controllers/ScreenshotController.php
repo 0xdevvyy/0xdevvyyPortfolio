@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Action\Screenshot\Delete;
 use App\Http\Requests\StoreScreenshotRequest;
 use App\Http\Requests\UpdateScreenshotRequest;
 use App\Models\Screenshot;
@@ -61,8 +62,8 @@ class ScreenshotController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Screenshot $screenshot): void
+    public function destroy(Screenshot $screenshot, Delete $action): void
     {
-        //
+        $action->delete($screenshot);
     }
 }

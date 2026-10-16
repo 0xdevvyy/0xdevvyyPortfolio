@@ -1,9 +1,14 @@
 <script setup lang="ts">
+import ProjectTag from '@/components/project/ProjectTag.vue';
+import Screenshot from '@/components/ui/images/Screenshot.vue';
 import Features from '@/components/ui/input/Features.vue';
+import Image from '@/components/ui/input/Image.vue';
+import ImageThumbnail from '@/components/ui/input/ImageThumbnail.vue';
+import Switch from '@/components/ui/input/Switch.vue';
 import Text from '@/components/ui/input/Text.vue';
 import TextArea from '@/components/ui/input/TextArea.vue';
 import auth from '@/routes/auth';
-import { Form, Head, Link, useForm } from '@inertiajs/vue3';
+import { Head, Link, router, useForm } from '@inertiajs/vue3';
 import {
     ArrowLeft,
     CalendarDays,
@@ -11,12 +16,11 @@ import {
     Eye,
     FileText,
     Image as ImageIcon,
-    Save,
     Star,
     Tag as TagIcon,
     Upload,
-    X,
 } from '@lucide/vue';
+import { ref } from 'vue';
 
 interface Screenshot {
     id: number;
@@ -40,7 +44,7 @@ interface Project {
     publishedAt: string | null;
     screenshots: Screenshot[];
     tags: Tag[];
-    projectUrl?: string | null;
+    // projectUrl?: string | null;
 }
 
 const props = defineProps<{
@@ -48,6 +52,7 @@ const props = defineProps<{
     tags: Tag[];
 }>();
 
+const newScreenshots = ref<File[]>([]);
 
 const form = useForm({
     title: props.project.title,
@@ -63,42 +68,49 @@ const form = useForm({
 });
 
 function submit() {
-    form.put(auth.project.update(props.project.slug).url, {
+    form.screenshots = [...newScreenshots.value];
+    form.put(auth.project.update(props.project.id).url, {
+        // forceFormData: true,
         preserveScroll: true,
     });
 }
-
 </script>
 
 <template>
     <Head :title="`Edit ${project.title}`" />
 
-    <div class="project-editor-page mx-auto w-full max-w-7xl space-y-8 px-4 py-8 sm:px-6 lg:px-8">
+    <div
+        class="project-editor-page mx-auto w-full max-w-7xl space-y-8 px-4 py-8 sm:px-6 lg:px-8"
+    >
         <div class="space-y-8">
-            <header class="flex flex-col justify-between gap-5 sm:flex-row sm:items-center">
+            <header
+                class="flex flex-col justify-between gap-5 sm:flex-row sm:items-center"
+            >
                 <div class="space-y-3">
                     <Link
                         :href="auth.project.index()"
-                        class="inline-flex items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-primary"
+                        class="text-muted-foreground hover:text-primary inline-flex items-center gap-2 text-sm transition-colors"
                     >
                         <ArrowLeft :size="16" />
                         Back to Projects
                     </Link>
 
                     <div>
-                        <h1 class="font-display text-3xl text-primary sm:text-4xl">
+                        <h1
+                            class="font-display text-primary text-3xl sm:text-4xl"
+                        >
                             Edit Project
                         </h1>
 
-                        <p class="mt-2 text-sm leading-6 text-muted-foreground">
-                            Update your project details, features, screenshots and tags.
+                        <p class="text-muted-foreground mt-2 text-sm leading-6">
+                            Update your project details, features, screenshots
+                            and tags.
                         </p>
                     </div>
                 </div>
             </header>
             <form @submit.prevent="submit">
                 <div class="grid grid-cols-1 items-start gap-6 lg:grid-cols-3">
-                
                     <div class="min-w-0 space-y-6 lg:col-span-2">
                         <section class="editor-panel">
                             <div class="panel-heading">
@@ -118,8 +130,10 @@ function submit() {
                             </div>
 
                             <div class="space-y-5">
-                                <div class="grid grid-cols-1 gap-5 sm:grid-cols-2">
-                                    <Text 
+                                <div
+                                    class="grid grid-cols-1 gap-5 sm:grid-cols-2"
+                                >
+                                    <Text
                                         id="title"
                                         name="title"
                                         label="Project Title"
@@ -129,7 +143,7 @@ function submit() {
                                         :error="form.errors.title"
                                     />
 
-                                    <Text 
+                                    <Text
                                         id="slug"
                                         name="slug"
                                         label="Project slug"
@@ -151,7 +165,6 @@ function submit() {
                                     :error="form.errors.description"
                                     hint="A short description of the project"
                                     required
-                                    
                                 />
 
                                 <TextArea
@@ -165,7 +178,6 @@ function submit() {
                                     :error="form.errors.excerpt"
                                     hint="The excerpt of the project"
                                     required
-                                    
                                 />
                             </div>
                         </section>
@@ -177,103 +189,22 @@ function submit() {
                                 </div>
 
                                 <div>
-                                    <h2 class="panel-title">
-                                        Features
-                                    </h2>
+                                    <h2 class="panel-title">Features</h2>
 
                                     <p class="panel-description">
-                                        Highlight what makes your project special.
+                                        Highlight what makes your project
+                                        special.
                                     </p>
                                 </div>
                             </div>
 
                             <div class="space-y-3">
-                            <Features 
-                                v-model="form.features"
-                            />
+                                <Features v-model="form.features" />
                             </div>
                         </section>
 
-
-                        <!-- A placeholder or now  -->
-                        <section class="editor-panel">
-                            <div class="panel-heading">
-                                <div class="panel-icon">
-                                    <TagIcon :size="19" />
-                                </div>
-
-                                <div>
-                                    <h2 class="panel-title">
-                                        Project Tags
-                                    </h2>
-
-                                    <p class="panel-description">
-                                        Select the technologies and topics used in your project.
-                                    </p>
-                                </div>
-                            </div>
-
-                            <div class="space-y-4">
-                                <div class="flex items-center justify-between gap-3">
-                                    <p class="text-sm font-medium">
-                                        Available tags
-                                    </p>
-
-                                    <span class="field-hint">
-                                        {{ project.tags.length }} selected
-                                    </span>
-                                </div>
-
-                                <div class="flex flex-wrap gap-2">
-                                    <span
-                                        v-for="tag in tags"
-                                        :key="tag.id"
-                                        class="tag-choice"
-                                        :class="{
-                                            'tag-choice-selected': project.tags.some(
-                                                (selectedTag) => selectedTag.id === tag.id,
-                                            ),
-                                        }"
-                                    >
-                                        {{ tag.name }}
-
-                                        <Check
-                                            v-if="project.tags.some(
-                                                (selectedTag) => selectedTag.id === tag.id,
-                                            )"
-                                            :size="14"
-                                        />
-                                    </span>
-                                </div>
-
-                                <div class="tag-preview">
-                                    <span class="text-xs font-semibold text-muted-foreground">
-                                        SELECTED
-                                    </span>
-
-                                    <div
-                                        v-if="project.tags.length"
-                                        class="flex flex-wrap gap-2"
-                                    >
-                                        <span
-                                            v-for="tag in project.tags"
-                                            :key="tag.id"
-                                            class="tag-chip"
-                                        >
-                                            {{ tag.name }}
-                                        </span>
-                                    </div>
-
-                                    <p
-                                        v-else
-                                        class="text-sm text-muted-foreground"
-                                    >
-                                        No tags selected.
-                                    </p>
-                                </div>
-                            </div>
-                        </section>
-
+                        <!-- Tags  -->
+                        <ProjectTag v-model="form.tags" :tags="props.tags" />
                         <!-- this screenshot will also be a placeholder for now -->
                         <section class="editor-panel">
                             <div class="panel-heading">
@@ -287,13 +218,16 @@ function submit() {
                                     </h2>
 
                                     <p class="panel-description">
-                                        Manage the screenshots included in your project.
+                                        Manage the screenshots included in your
+                                        project.
                                     </p>
                                 </div>
                             </div>
 
                             <div class="space-y-4">
-                                <div class="flex items-center justify-between gap-3">
+                                <div
+                                    class="flex items-center justify-between gap-3"
+                                >
                                     <p class="text-sm font-medium">
                                         Screenshot gallery
                                     </p>
@@ -302,48 +236,21 @@ function submit() {
                                         {{ project.screenshots.length }} images
                                     </span>
                                 </div>
+                                <Screenshot
+                                    :screenshots="project.screenshots"
+                                />
 
-                                <div
-                                    v-if="project.screenshots.length"
-                                    class="grid grid-cols-2 gap-3 sm:grid-cols-3"
-                                >
-                                    <div
-                                        v-for="screenshot in project.screenshots"
-                                        :key="screenshot.id"
-                                        class="screenshot-item"
-                                    >
-                                        <img
-                                            :src="screenshot.screenshotPath.startsWith('/') || screenshot.screenshotPath.startsWith('http')
-                                                ? screenshot.screenshotPath
-                                                : `/storage/${screenshot.screenshotPath}`"
-                                            :alt="`Project screenshot ${screenshot.id}`"
-                                            class="screenshot-image"
-                                        />
-
-                                        <span class="screenshot-caption">
-                                            Existing image
-                                        </span>
-                                    </div>
-                                </div>
-
-                                <div
-                                    v-else
-                                    class="empty-note"
-                                >
-                                    No screenshots added yet. Add screenshots to showcase your project.
-                                </div>
-
-                                <div class="upload-zone">
-                                    <Upload :size="25" />
-
-                                    <span class="font-semibold">
-                                        Add project screenshots
-                                    </span>
-
-                                    <span class="text-xs text-muted-foreground">
-                                        PNG, JPG or WEBP
-                                    </span>
-                                </div>
+                                <Image
+                                    title="Input Project Screenshots"
+                                    :error="
+                                        Object.entries(form.errors)
+                                            .filter(([key]) =>
+                                                /^screenshots\.\d+$/.test(key),
+                                            )
+                                            .map(([, message]) => message)
+                                    "
+                                    v-model="newScreenshots"
+                                />
                             </div>
                         </section>
                     </div>
@@ -366,40 +273,10 @@ function submit() {
                                 </div>
                             </div>
 
-                            <div class="space-y-4">
-                                <div
-                                    v-if="project.thumbnailPath"
-                                    class="thumbnail-preview"
-                                >
-                                    <img
-                                        :src="project.thumbnailPath.startsWith('/') || project.thumbnailPath.startsWith('http')
-                                            ? project.thumbnailPath
-                                            : `/storage/${project.thumbnailPath}`"
-                                        :alt="`${project.title} thumbnail`"
-                                        class="aspect-video w-full rounded-lg object-cover"
-                                    />
-
-                                    <div class="thumbnail-change">
-                                        <Upload :size="15" />
-                                        Change Image
-                                    </div>
-                                </div>
-
-                                <div
-                                    v-else
-                                    class="upload-zone min-h-44"
-                                >
-                                    <ImageIcon :size="30" />
-
-                                    <span class="font-semibold">
-                                        Upload thumbnail
-                                    </span>
-
-                                    <span class="text-xs text-muted-foreground">
-                                        Click to choose an image
-                                    </span>
-                                </div>
-                            </div>
+                            <ImageThumbnail
+                                :project="project"
+                                @update:thumbnail="form.thumbnail_path = $event"
+                            />
                         </section>
 
                         <section class="editor-panel">
@@ -420,32 +297,45 @@ function submit() {
                             </div>
 
                             <div class="space-y-5">
-                                <div class="flex items-center justify-between gap-3">
+                                <div
+                                    class="flex items-center justify-between gap-3"
+                                >
                                     <div>
                                         <p class="text-sm font-semibold">
                                             Publish Project
                                         </p>
 
                                         <p class="field-hint">
-                                            Make this project visible to visitors.
+                                            Make this project visible to
+                                            visitors.
                                         </p>
                                     </div>
 
-                                    <span
-                                        class="publish-toggle"
-                                        :class="{ 'is-published': project.isPublished }"
+                                    <label
+                                        class="publish-toggle cursor-pointer"
+                                        :class="{
+                                            'is-published': form.is_published,
+                                        }"
                                     >
+                                        <Switch
+                                            id="is-published"
+                                            name="is_published"
+                                            v-model="form.is_published"
+                                            :error="form.errors.is_published"
+                                        />
+
                                         <span
                                             class="publish-toggle-knob"
-                                            :class="{ 'is-published': project.isPublished }"
+                                            :class="{
+                                                'is-published':
+                                                    form.is_published,
+                                            }"
                                         />
-                                    </span>
+                                    </label>
                                 </div>
 
                                 <div>
-                                    <p class="form-label">
-                                        Publication Date
-                                    </p>
+                                    <p class="form-label">Publication Date</p>
 
                                     <div class="input-wrapper">
                                         <CalendarDays
@@ -454,7 +344,12 @@ function submit() {
                                         />
 
                                         <div class="form-input">
-                                            {{ project.publishedAt?.slice(0, 10) || 'Not set' }}
+                                            {{
+                                                project.publishedAt?.slice(
+                                                    0,
+                                                    10,
+                                                ) || 'Not set'
+                                            }}
                                         </div>
                                     </div>
                                 </div>
@@ -468,9 +363,7 @@ function submit() {
                                 </div>
 
                                 <div>
-                                    <h2 class="panel-title">
-                                        Quick Preview
-                                    </h2>
+                                    <h2 class="panel-title">Quick Preview</h2>
 
                                     <p class="panel-description">
                                         A snapshot of your project.
@@ -481,16 +374,14 @@ function submit() {
                             <div class="quick-preview">
                                 <img
                                     v-if="project.thumbnailPath"
-                                    :src="project.thumbnailPath.startsWith('/') || project.thumbnailPath.startsWith('http')
-                                        ? project.thumbnailPath
-                                        : `/storage/${project.thumbnailPath}`"
+                                    :src="project.thumbnailPath"
                                     :alt="`${project.title} preview`"
-                                    class="aspect-video w-full rounded-md border border-border object-cover"
+                                    class="border-border aspect-video w-full rounded-md border object-cover"
                                 />
 
                                 <div
                                     v-else
-                                    class="flex aspect-video items-center justify-center rounded-md border border-dashed border-border bg-muted"
+                                    class="border-border bg-muted flex aspect-video items-center justify-center rounded-md border border-dashed"
                                 >
                                     <ImageIcon
                                         :size="30"
@@ -498,7 +389,9 @@ function submit() {
                                     />
                                 </div>
 
-                                <h3 class="mt-4 font-heading text-lg text-primary">
+                                <h3
+                                    class="font-heading text-primary mt-4 text-lg"
+                                >
                                     {{ project.title }}
                                 </h3>
 
@@ -512,31 +405,46 @@ function submit() {
                                     </span>
                                 </div>
 
-                                <p class="mt-3 text-xs leading-6 text-muted-foreground">
+                                <p
+                                    class="text-muted-foreground mt-3 text-xs leading-6"
+                                >
                                     {{ project.excerpt }}
                                 </p>
 
-                                <div class="mt-4 border-t border-dashed border-border pt-3">
+                                <div
+                                    class="border-border mt-4 border-t border-dashed pt-3"
+                                >
                                     <span
                                         class="inline-flex items-center gap-2 text-xs font-semibold"
-                                        :class="project.isPublished ? 'text-secondary' : 'text-muted-foreground'"
+                                        :class="
+                                            project.isPublished
+                                                ? 'text-secondary'
+                                                : 'text-muted-foreground'
+                                        "
                                     >
                                         <span
                                             class="size-2 rounded-full"
-                                            :class="project.isPublished ? 'bg-secondary' : 'bg-pencil'"
+                                            :class="
+                                                project.isPublished
+                                                    ? 'bg-secondary'
+                                                    : 'bg-pencil'
+                                            "
                                         />
 
-                                        {{ project.isPublished ? 'Currently published' : 'Saved as draft' }}
+                                        {{
+                                            project.isPublished
+                                                ? 'Currently published'
+                                                : 'Saved as draft'
+                                        }}
                                     </span>
                                 </div>
                             </div>
                         </section>
                     </aside>
-                    
                 </div>
 
                 <footer class="editor-footer">
-                    <p class="text-xs leading-5 text-muted-foreground">
+                    <p class="text-muted-foreground text-xs leading-5">
                         Your project changes will be submitted when you save.
                     </p>
 
@@ -551,7 +459,7 @@ function submit() {
                         </button>
                     </div>
                 </footer>
-            </form>          
+            </form>
         </div>
     </div>
 </template>

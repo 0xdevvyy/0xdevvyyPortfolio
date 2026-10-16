@@ -1,4 +1,3 @@
-
 <script setup lang="ts">
 withDefaults(
     defineProps<{
@@ -19,10 +18,9 @@ withDefaults(
     },
 );
 
-
 defineEmits<{
-    'update:modelValue': [value: string]
-}>()
+    "update:modelValue": [value: string];
+}>();
 </script>
 
 <template>
@@ -40,7 +38,12 @@ defineEmits<{
             :maxlength="maxlength"
             :required="required"
             :value="modelValue"
-            @input="$emit('update:modelValue', ($event.target as HTMLInputElement).value)"
+            @input="
+                $emit(
+                    'update:modelValue',
+                    ($event.target as HTMLInputElement).value,
+                )
+            "
             class="form-input standalone !h-auto resize-y py-3"
         />
 

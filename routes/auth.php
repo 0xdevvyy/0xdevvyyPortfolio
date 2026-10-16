@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\SessionsController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProjectController;
+use App\Http\Controllers\ScreenshotController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/login', [SessionsController::class, 'index'])->name('login.index');
@@ -15,6 +16,8 @@ Route::prefix('auth')->middleware(['auth', 'throttle:30,1'])->group(function ():
         Route::get('/', [ProjectController::class, 'indexAuth'])->name('auth.project.index');
         Route::get('/{project}/edit', [ProjectController::class, 'edit'])->name('auth.project.edit');
         Route::put('/{project}/update', [ProjectController::class, 'update'])->name('auth.project.update');
+
+        Route::delete('/{screenshot}/delete', [ScreenshotController::class, 'destroy'])->name('auth.screenshot.delete');
     });
 });
 

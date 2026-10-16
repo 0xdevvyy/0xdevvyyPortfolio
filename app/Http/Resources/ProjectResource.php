@@ -7,6 +7,7 @@ namespace App\Http\Resources;
 use App\Models\Project;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\Storage;
 
 /**
  * @mixin Project
@@ -25,7 +26,7 @@ class ProjectResource extends JsonResource
             // 'userId' => $this->user_id,
             'title' => $this->title,
             'slug' => $this->slug,  // i can create a path in the model..
-            'thumbnailPath' => $this->thumbnail_path,
+            'thumbnailPath' => asset(Storage::url($this->thumbnail_path)),
             'description' => $this->description,
             'excerpt' => $this->excerpt,
             'features' => $this->features,

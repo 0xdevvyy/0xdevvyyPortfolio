@@ -1,4 +1,3 @@
-
 <script setup lang="ts">
 interface RadioOption {
     label: string;
