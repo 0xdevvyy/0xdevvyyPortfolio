@@ -5,11 +5,13 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use App\Action\Tag\Create;
+use App\Action\Tag\Update;
 use App\Http\Requests\StoreTagRequest;
 use App\Http\Requests\UpdateTagRequest;
 use App\Http\Resources\TagResource;
 use App\Models\Tag;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Gate;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -20,6 +22,8 @@ class TagController extends Controller
      */
     public function index(): Response
     {
+        Gate::authorize('viewAny', Tag::class);
+
         return Inertia::render('tag/Index', [
             'tags' => TagResource::collection(Tag::all()),
         ]);
@@ -51,32 +55,58 @@ class TagController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Tag $tag): void
+    public function show(Tag $tag): Response
     {
-        //
+        Gate::authorize('view', $tag);
+
+        return Inertia::render('tag/Show', [
+            'tag' => new TagResource($tag),
+        ]);
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Tag $tag): void
+    public function edit(Tag $tag): Response
     {
-        //
+        Gate::authorize('workWith', $tag);
+
+        return Inertia::render('tag/Edit', [
+            'tag' => new TagResource($tag),
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateTagRequest $request, Tag $tag): void
+    public function update(UpdateTagRequest $request, Tag $tag, Update $action): RedirectResponse
     {
-        //
+        Gate::authorize('workWith', $tag);
+
+        $action->update($request->safe()->all(), $tag);
+
+        Inertia::flash('toast', [
+            'type' => 'successfull',
+            'message' => 'Tag Successfully Updated',
+        ]);
+
+        return to_route('auth.tag.index');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Tag $tag): void
+    public function destroy(Tag $tag): RedirectResponse
     {
-        //
+        Gate::authorize('workWith', $tag);
+
+        $tag->delete();
+
+        Inertia::flash('toast', [
+            'type' => 'success',
+            'message' => 'Tag Successfully Deleted',
+        ]);
+
+        return to_route('auth.tag.index');
     }
 }

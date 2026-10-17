@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import auth from '@/routes/auth';
+import { edit } from '@/routes/auth/tag';
 import { Head, Link } from '@inertiajs/vue3';
 import { Pencil, Plus, Tag as TagIcon } from '@lucide/vue';
 
 interface Tag {
     id: number;
     name: string;
-    projects_count?: number;
 }
 
 defineProps<{
@@ -94,7 +94,7 @@ defineProps<{
                         class="flex shrink-0 items-center gap-2 sm:justify-end"
                     >
                         <Link
-                            href=""
+                            :href="edit(tag.id)"
                             class="border-primary/30 text-primary hover:border-primary hover:bg-popover inline-flex items-center gap-2 border px-3 py-2 font-mono text-xs transition"
                         >
                             <Pencil class="size-3.5" />
