@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import auth from '@/routes/auth';
 import { Head, Link } from '@inertiajs/vue3';
 import { Pencil, Plus, Tag as TagIcon } from '@lucide/vue';
 
@@ -37,7 +38,7 @@ defineProps<{
             </div>
 
             <Link
-                href=""
+                :href="auth.tag.create()"
                 class="border-primary bg-primary text-popover inline-flex items-center justify-center gap-2 self-start border-2 px-4 py-2.5 font-mono text-sm transition hover:-translate-y-0.5 hover:bg-[#2B5273] sm:self-auto"
             >
                 <Plus class="size-4" />
