@@ -32,7 +32,7 @@ Route::prefix('auth')->middleware(['auth', 'throttle:30,1'])->group(function ():
         Route::post('/store', [TagController::class, 'store'])->name('auth.tag.store');
         Route::get('/{tag}/edit', [TagController::class, 'edit'])->name('auth.tag.edit');
         Route::put('/{tag}/update', [TagController::class, 'update'])->name('auth.tag.update');
-        Route::delete('/{tag}/delete', [TagController::class, 'delete'])->name('auth.tag.delete');
+        Route::delete('/{tag}/delete', [TagController::class, 'destroy'])->name('auth.tag.delete');
     });
 });
 

@@ -1,8 +1,10 @@
 <script setup lang="ts">
 import auth from '@/routes/auth';
 import { edit } from '@/routes/auth/tag';
-import { Head, Link } from '@inertiajs/vue3';
-import { Pencil, Plus, Tag as TagIcon } from '@lucide/vue';
+import { Head, Link, router } from '@inertiajs/vue3';
+import { Pencil, Plus, Tag as TagIcon, Trash2 } from '@lucide/vue';
+import { ref } from 'vue';
+import Delete from '@/components/ui/dialog/Delete.vue';
 
 interface Tag {
     id: number;
@@ -12,6 +14,40 @@ interface Tag {
 defineProps<{
     tags: Tag[];
 }>();
+
+const selectedTag = ref<Tag | null>(null);
+const processing = ref(false);
+
+function confirmDelete(tag: Tag) {
+    selectedTag.value = tag;
+}
+
+function cancelDelete() {
+    if (processing.value) {
+        return;
+    }
+
+    selectedTag.value = null;
+}
+
+function deleteTag() {
+    if (!selectedTag.value || processing.value) {
+        return;
+    }
+
+    processing.value = true;
+
+    router.delete(auth.tag.delete(selectedTag.value.id).url, {
+        //form ba or router?
+        preserveScroll: true,
+        onSuccess: () => {
+            selectedTag.value = null;
+        },
+        onFinish: () => {
+            processing.value = false;
+        },
+    });
+}
 </script>
 
 <template>
@@ -100,6 +136,16 @@ defineProps<{
                             <Pencil class="size-3.5" />
                             Edit
                         </Link>
+
+                        <button
+                            type="button"
+                            class="border-error-500/30 text-error inline-flex cursor-pointer items-center gap-2 border px-3 py-2 font-mono text-xs transition hover:border-red-500 hover:bg-red-500/10 disabled:cursor-not-allowed disabled:opacity-50"
+                            :disabled="processing"
+                            @click="confirmDelete(tag)"
+                        >
+                            <Trash2 class="size-3.5" />
+                            Delete
+                        </button>
                     </div>
                 </div>
             </div>
@@ -123,4 +169,17 @@ defineProps<{
             </footer>
         </section>
     </main>
+
+    <Delete
+        :open="selectedTag !== null"
+        :title="`Delete ${selectedTag?.name ?? 'tag'}?`"
+        :description="
+            selectedTag
+                ? `Are you sure you want to delete the tag '${selectedTag.name}'? This action cannot be undone.`
+                : 'This action cannot be undone.'
+        "
+        :processing="processing"
+        @confirm="deleteTag"
+        @cancel="cancelDelete"
+    />
 </template>
