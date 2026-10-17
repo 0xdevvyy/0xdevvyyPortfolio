@@ -6,16 +6,21 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreTagRequest;
 use App\Http\Requests\UpdateTagRequest;
+use App\Http\Resources\TagResource;
 use App\Models\Tag;
+use Inertia\Inertia;
+use Inertia\Response;
 
 class TagController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index(): void
+    public function index(): Response
     {
-        //
+        return Inertia::render('tag/Index', [
+            'tags' => TagResource::collection(Tag::all()),
+        ]);
     }
 
     /**

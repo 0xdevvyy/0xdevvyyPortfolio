@@ -4,6 +4,7 @@ use App\Http\Controllers\Auth\SessionsController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\ScreenshotController;
+use App\Http\Controllers\TagController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/login', [SessionsController::class, 'index'])->name('login.index');
@@ -23,7 +24,15 @@ Route::prefix('auth')->middleware(['auth', 'throttle:30,1'])->group(function ():
         Route::delete('/{project}/delete', [ProjectController::class, 'delete'])->name('auth.project.delete');
 
         Route::delete('/{screenshot}/delete', [ScreenshotController::class, 'destroy'])->name('auth.screenshot.delete');
+    });
 
+    Route::prefix('tag')->group(function (): void {
+        Route::get('/', [TagController::class, 'index'])->name('auth.tag.index');
+        Route::get('/create', [TagController::class, 'create'])->name('auth.tag.create');
+        Route::post('/store', [TagController::class, 'store'])->name('auth.tag.store');
+        Route::get('/{tag}/edit', [TagController::class, 'edit'])->name('auth.tag.edit');
+        Route::put('/{tag}/update', [TagController::class, 'update'])->name('auth.tag.update');
+        Route::delete('/{tag}/delete', [TagController::class, 'delete'])->name('auth.tag.delete');
     });
 });
 
