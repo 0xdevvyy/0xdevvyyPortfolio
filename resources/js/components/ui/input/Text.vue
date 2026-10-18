@@ -8,6 +8,7 @@ withDefaults(
         type?: string;
         hint?: string;
         error?: string;
+        maxlength?: number;
         required?: boolean;
         modelValue: string;
     }>(),
@@ -24,16 +25,18 @@ defineEmits<{
 
 <template>
     <div class="min-w-0">
-        <label class="form-label">
+        <label :for="id" class="form-label">
             {{ label }}
             <span v-if="required" class="text-red">*</span>
         </label>
 
         <input
             :id="id"
+            :type="type"
             :placeholder="placeholder"
             :name="name"
             :required="required"
+            :maxlength="maxlength"
             class="form-input standalone"
             @input="
                 $emit(

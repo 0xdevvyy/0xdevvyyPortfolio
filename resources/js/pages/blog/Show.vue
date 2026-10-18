@@ -33,7 +33,7 @@ const formatPublishedDate = (publishedAt: string | null): string => {
         <article class="mx-auto max-w-3xl">
             <Link
                 href="/blogs"
-                class="font-mono text-ink/60 hover:text-sage group mb-10 inline-flex items-center gap-2 text-sm transition-colors"
+                class="text-ink/60 hover:text-sage group mb-10 inline-flex items-center gap-2 font-mono text-sm transition-colors"
             >
                 <ArrowLeft
                     :size="16"

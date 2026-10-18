@@ -37,7 +37,7 @@ Route::prefix('auth')->middleware(['auth', 'throttle:30,1'])->group(function ():
     });
 
     Route::prefix('blogs')->group(function (): void {
-        // Route::get('/', [BlogController::class, 'index'])->name('auth.blog.index');
+        Route::get('/', [BlogController::class, 'indexAuth'])->name('auth.blog.index');
         Route::get('/create', [BlogController::class, 'create'])->name('auth.blog.create');
         Route::post('/store', [BlogController::class, 'store'])->name('auth.blog.store');
         Route::get('/{blog}/edit', [BlogController::class, 'edit'])->name('auth.blog.edit');
