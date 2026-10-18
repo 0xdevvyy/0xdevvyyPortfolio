@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace App\Action\Project;
 
-use App\Action\Screenshot\Create as ScreenshotCreate;
+use App\Action\Screenshot\Store as ScreenshotCreate;
 use App\Models\Project;
 use App\Models\User;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 
-final readonly class Create
+final readonly class Store
 {
     public function __construct(
         public ScreenshotCreate $createScreenshots,

@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-use App\Action\Tag\Create;
+use App\Action\Tag\Delete;
+use App\Action\Tag\Store;
 use App\Action\Tag\Update;
 use App\Http\Requests\StoreTagRequest;
 use App\Http\Requests\UpdateTagRequest;
@@ -40,7 +41,7 @@ class TagController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreTagRequest $request, Tag $tag, Create $action): RedirectResponse
+    public function store(StoreTagRequest $request, Tag $tag, Store $action): RedirectResponse
     {
         $action->handle($request->safe()->all(), $tag);
 
@@ -96,11 +97,11 @@ class TagController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Tag $tag): RedirectResponse
+    public function destroy(Tag $tag, Delete $action): RedirectResponse
     {
         Gate::authorize('workWith', $tag);
 
-        $tag->delete();
+        $action->destory($tag);
 
         Inertia::flash('toast', [
             'type' => 'success',

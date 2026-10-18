@@ -7,7 +7,7 @@ namespace App\Action\Tag;
 use App\Models\Tag;
 use Illuminate\Support\Facades\DB;
 
-final readonly class Create
+final readonly class Store
 {
     /**
      * @param  array<string>  $data

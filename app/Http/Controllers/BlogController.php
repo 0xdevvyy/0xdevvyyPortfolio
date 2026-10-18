@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Action\Blog\Delete;
 use App\Action\Blog\Store;
+use App\Action\Blog\Update;
 use App\Http\Requests\StoreBlogRequest;
 use App\Http\Requests\UpdateBlogRequest;
 use App\Http\Resources\BlogResource;
@@ -99,13 +101,11 @@ class BlogController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateBlogRequest $request, Blog $blog): RedirectResponse
+    public function update(UpdateBlogRequest $request, Blog $blog, #[Authenticated()] User $user, Update $action): RedirectResponse
     {
         Gate::authorize('workWith', $blog);
 
-        $data = $request->validated();
-        $data['published_at'] ??= now();
-        $blog->update($data);
+        $action->update($request->safe()->all(), $user);
 
         Inertia::flash('toast', [
             'type' => 'success',
@@ -118,11 +118,11 @@ class BlogController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Blog $blog): RedirectResponse
+    public function destroy(Blog $blog, Delete $action): RedirectResponse
     {
         Gate::authorize('workWith', $blog);
 
-        $blog->delete();
+        $action->destroy($blog);
 
         Inertia::flash('toast', [
             'type' => 'success',

@@ -12,10 +12,8 @@ final readonly class Update
     /**
      * @param  array<string>  $data
      */
-    public function update(array $data, Tag $tag): Tag
+    public function update(array $data, Tag $tag): void
     {
         DB::transaction(fn () => $tag->update($data));
-
-        return $tag;
     }
 }

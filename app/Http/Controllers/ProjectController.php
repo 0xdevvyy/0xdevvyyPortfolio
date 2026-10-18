@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-use App\Action\Project\Create;
 use App\Action\Project\Delete;
+use App\Action\Project\Store;
 use App\Action\Project\Update;
 use App\Http\Requests\StoreProjectRequest;
 use App\Http\Requests\UpdateProjectRequest;
@@ -100,7 +100,7 @@ class ProjectController extends Controller
         ]);
     }
 
-    public function store(StoreProjectRequest $request, #[Authenticated()] User $user, Create $action): RedirectResponse
+    public function store(StoreProjectRequest $request, #[Authenticated()] User $user, Store $action): RedirectResponse
     {
         $action->handle($request->safe()->all(), $user);
 
