@@ -6,6 +6,7 @@ import { aboutMe, contact, dashboard, home } from '@/routes';
 import { Link, usePage } from '@inertiajs/vue3';
 import { index } from '@/routes/project';
 import project from '@/routes/auth/project';
+import tag from '@/routes/auth/tag';
 
 const isMenuOpen = ref(false);
 const isVisible = ref(true);
@@ -20,6 +21,7 @@ const items = computed(() => {
     const guestItems = [
         { name: 'Me', href: home() },
         { name: 'Projects', href: index() },
+        { name: 'Blogs', href: '/blogs' },
         { name: 'About Me', href: aboutMe() },
         { name: 'Contact', href: contact() },
     ];
@@ -27,8 +29,8 @@ const items = computed(() => {
     const authenticatedItems = [
         { name: 'Dashboard', href: dashboard() },
         { name: 'Projects', href: project.index() },
-        { name: 'About Me', href: aboutMe() },
-        { name: 'Contact', href: contact() },
+        { name: 'Blogs', href: '/auth/blogs' },
+        { name: 'Tags', href: tag.index() },
     ];
 
     return isAuthenticated.value ? authenticatedItems : guestItems;

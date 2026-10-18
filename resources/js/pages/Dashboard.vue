@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import auth from '@/routes/auth';
 import { Link } from '@inertiajs/vue3';
 import { ArrowUpRight, BookOpen, FolderKanban } from '@lucide/vue';
 
@@ -94,7 +95,7 @@ defineProps<{
 
                 <!-- Blogs -->
                 <Link
-                    href="/blogs"
+                    :href="auth.blog.index()"
                     class="group border-border bg-card hover-bounce relative overflow-hidden rounded-2xl border-2 p-7 transition-all duration-200"
                 >
                     <div

@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-use App\Action\Project\Create;
 use App\Action\Project\Delete;
+use App\Action\Project\Store;
 use App\Action\Project\Update;
 use App\Http\Requests\StoreProjectRequest;
 use App\Http\Requests\UpdateProjectRequest;
@@ -16,6 +16,7 @@ use App\Models\Tag;
 use App\Models\User;
 use Illuminate\Container\Attributes\Authenticated;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Gate;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -41,21 +42,28 @@ class ProjectController extends Controller
         ]);
     }
 
-    public function indexAuth(): Response
+    public function indexAuth(#[Authenticated] User $user): Response
     {
-        $projects = Project::query()->with('tags')->latest()->get();
+
+        $projects = $user->projects()
+            ->with('tags')
+            ->latest()
+            ->get();
 
         return Inertia::render('project/Index', [
             'projects' => ProjectResource::collection($projects),
         ]);
     }
 
-    public function edit(string $slug): Response
+    public function edit(string $slug, #[Authenticated] User $user): Response
     {
-        $project = Project::query()
+
+        $project = $user->projects()
             ->with(['tags', 'screenshots'])
             ->where('slug', $slug)
             ->firstOrFail();
+
+        Gate::authorize('workWith', $project);
 
         $tags = Tag::query()
             ->orderBy('name')
@@ -69,7 +77,7 @@ class ProjectController extends Controller
 
     public function update(UpdateProjectRequest $request, Project $project, Update $action): RedirectResponse
     {
-
+        Gate::authorize('workWith', $project);
         $action->update($request->safe()->all(), $project);
 
         Inertia::flash('toast', [
@@ -82,6 +90,7 @@ class ProjectController extends Controller
 
     public function create(): Response
     {
+
         $tags = Tag::query()
             ->orderBy('name')
             ->get();
@@ -91,7 +100,7 @@ class ProjectController extends Controller
         ]);
     }
 
-    public function store(StoreProjectRequest $request, #[Authenticated()] User $user, Create $action): RedirectResponse
+    public function store(StoreProjectRequest $request, #[Authenticated()] User $user, Store $action): RedirectResponse
     {
         $action->handle($request->safe()->all(), $user);
 
@@ -105,6 +114,7 @@ class ProjectController extends Controller
 
     public function delete(Project $project, Delete $action): RedirectResponse
     {
+        Gate::authorize('workWith', $project);
         $action->delete($project);
 
         Inertia::flash('toast', [

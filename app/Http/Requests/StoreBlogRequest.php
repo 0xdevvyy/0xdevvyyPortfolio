@@ -6,6 +6,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class StoreBlogRequest extends FormRequest
 {
@@ -14,7 +15,7 @@ class StoreBlogRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -25,7 +26,18 @@ class StoreBlogRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'title' => ['required', 'string', 'max:255'],
+            'slug' => [
+                'required',
+                'string',
+                'max:255',
+                'regex:/^[a-z0-9]+(?:-[a-z0-9]+)*$/',
+                Rule::unique('blogs', 'slug'),
+            ],
+            'description' => ['required', 'string', 'max:255'],
+            'excerpt' => ['required', 'string', 'max:255'],
+            'is_published' => ['required', 'boolean'],
+            'published_at' => ['nullable', 'date'],
         ];
     }
 }

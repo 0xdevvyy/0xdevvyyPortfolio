@@ -7,7 +7,7 @@ namespace App\Action\Screenshot;
 use App\Models\Project;
 use Illuminate\Support\Facades\DB;
 
-final readonly class Create
+final readonly class Store
 {
     /**
      * @param  array<string, mixed>  $screenshots
