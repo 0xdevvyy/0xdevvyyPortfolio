@@ -13,6 +13,7 @@ Route::middleware(['guest', 'throttle:30,1'])->group(function (): void {
     Route::inertia('/about-me', 'landing/About')->name('about-me');
     Route::get('/projects', [ProjectController::class, 'index'])->name('project.index');
     Route::get('/project/{slug}', [ProjectController::class, 'show'])->name('project.show');
+    Route::get('/blogs/{slug}', [BlogController::class, 'show'])->name('blog.show');
     Route::inertia('/contact', 'landing/Contact')->name('contact');
     Route::get('/blogs', [BlogController::class, 'index'])->name('blog.index');
 });

@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import Line from '@/components/ui/svg/Line.vue';
+import { Link } from '@inertiajs/vue3';
 
 interface BlogPost {
     id: number;
@@ -77,12 +78,12 @@ const formatPublishedDate = (publishedAt: string | null): string => {
                 </p>
 
                 <h2 class="font-display mt-2 text-2xl sm:text-3xl">
-                    <a
+                    <Link
                         :href="`/blogs/${blog.slug}`"
                         class="text-ink hover:text-sage focus-visible:text-sage transition-colors hover:underline hover:underline-offset-4 focus-visible:underline focus-visible:underline-offset-4"
                     >
                         {{ blog.title }}
-                    </a>
+                    </Link>
                 </h2>
 
                 <p class="text-ink/75 mt-2 font-mono text-sm leading-7">

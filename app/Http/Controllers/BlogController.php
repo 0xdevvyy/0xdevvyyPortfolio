@@ -53,9 +53,17 @@ class BlogController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Blog $blog): void
+    public function show(string $slug): Response
     {
-        //
+        $blog = Blog::query()
+            ->where('slug', $slug)
+            ->where('is_published', true)
+            ->where('published_at', '<=', now())
+            ->firstOrFail();
+
+        return Inertia::render('blog/Show', [
+            'blog' => new BlogResource($blog),
+        ]);
     }
 
     /**
