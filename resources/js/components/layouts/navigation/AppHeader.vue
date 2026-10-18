@@ -21,6 +21,7 @@ const items = computed(() => {
     const guestItems = [
         { name: 'Me', href: home() },
         { name: 'Projects', href: index() },
+        { name: 'Blogs', href: '/blogs' },
         { name: 'About Me', href: aboutMe() },
         { name: 'Contact', href: contact() },
     ];
@@ -28,7 +29,7 @@ const items = computed(() => {
     const authenticatedItems = [
         { name: 'Dashboard', href: dashboard() },
         { name: 'Projects', href: project.index() },
-        { name: 'Blogs', href: aboutMe() },
+        { name: 'Blogs', href: '/auth/blogs' },
         { name: 'Tags', href: tag.index() },
     ];
 

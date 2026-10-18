@@ -6,16 +6,32 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreBlogRequest;
 use App\Http\Requests\UpdateBlogRequest;
+use App\Http\Resources\BlogResource;
 use App\Models\Blog;
+use Inertia\Inertia;
+use Inertia\Response;
 
 class BlogController extends Controller
 {
+    public function authIndex(): void
+    {
+        //
+    }
+
     /**
      * Display a listing of the resource.
      */
-    public function index(): void
+    public function index(): Response
     {
-        //
+        $blogs = Blog::query()
+            ->where('is_published', true)
+            ->where('published_at', '<=', now())
+            ->latest('published_at')
+            ->get();
+
+        return Inertia::render('landing/Blogs', [
+            'blogs' => BlogResource::collection($blogs),
+        ]);
     }
 
     /**

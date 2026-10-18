@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Blog;
 use App\Models\Project;
 use App\Models\Screenshot;
 use App\Models\Tag;
@@ -19,9 +20,15 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         $user = User::factory()->create([
-            'name' => fake(),
+            'name' => fake()->name(),
             'email' => 'test@example.com',
         ]);
+
+        Blog::factory(10)
+            ->published()
+            ->create([
+                'user_id' => $user->id,
+            ]);
 
         $tags = Tag::factory(10)->create();
 

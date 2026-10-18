@@ -18,15 +18,23 @@ class BlogFactory extends Factory
      */
     public function definition(): array
     {
-        $title = fake()->title();
+        $title = fake()->unique()->word();
 
         return [
             'title' => $title,
             'slug' => Str::slug($title),
             'description' => fake()->sentence(),
             'excerpt' => fake()->sentences(3, true),
-            'is_published' => fake()->boolean(),
+            'is_published' => true,
             'published_at' => fake()->dateTime(),
         ];
+    }
+
+    public function published(): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'is_published' => true,
+            'published_at' => fake()->dateTimeBetween('-1 year', 'now'),
+        ]);
     }
 }

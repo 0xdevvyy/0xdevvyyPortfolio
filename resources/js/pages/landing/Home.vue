@@ -4,7 +4,7 @@ import PrimaryButton from '@/components/ui/button/PrimaryButton.vue';
 import HeadingRays from '@/components/ui/svg/HeadingRays.vue';
 import Highlight from '@/components/ui/svg/Highlight.vue';
 import Line from '@/components/ui/svg/Line.vue';
-import { aboutMe, home } from '@/routes';
+import { aboutMe } from '@/routes';
 import { index } from '@/routes/project';
 
 const logo = '/images/coding.png';
@@ -62,7 +62,7 @@ const logo = '/images/coding.png';
 
                     <GhostButton :href="aboutMe()"> About Me </GhostButton>
 
-                    <GhostButton :href="home()"> Blogs </GhostButton>
+                    <GhostButton href="/blogs"> Blogs </GhostButton>
                 </div>
             </div>
 

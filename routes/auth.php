@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\SessionsController;
+use App\Http\Controllers\BlogController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\ScreenshotController;
@@ -33,6 +34,15 @@ Route::prefix('auth')->middleware(['auth', 'throttle:30,1'])->group(function ():
         Route::get('/{tag}/edit', [TagController::class, 'edit'])->name('auth.tag.edit');
         Route::put('/{tag}/update', [TagController::class, 'update'])->name('auth.tag.update');
         Route::delete('/{tag}/delete', [TagController::class, 'destroy'])->name('auth.tag.delete');
+    });
+
+    Route::prefix('blogs')->group(function (): void {
+        // Route::get('/', [BlogController::class, 'index'])->name('auth.blog.index');
+        Route::get('/create', [BlogController::class, 'create'])->name('auth.blog.create');
+        Route::post('/store', [BlogController::class, 'store'])->name('auth.blog.store');
+        Route::get('/{blog}/edit', [BlogController::class, 'edit'])->name('auth.blog.edit');
+        Route::put('/{blog}/update', [BlogController::class, 'update'])->name('auth.blog.update');
+        Route::delete('/{blog}/delete', [BlogController::class, 'destroy'])->name('auth.blog.delete');
     });
 });
 
