@@ -21,3 +21,4 @@ Route::middleware(['guest', 'throttle:30,1'])->group(function (): void {
 // Route::middleware(['auth'])
 
 require __DIR__.'/auth.php';
+require __DIR__.'/settings.php';
