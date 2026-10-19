@@ -18,3 +18,12 @@ it('logins the user', function (): void {
     $this->actingAs($user);
 
 });
+
+it('logs out the authenticated user and invalidates their session', function (): void {
+    $user = User::factory()->create();
+
+    $response = $this->actingAs($user)->post(route('auth.logout'));
+
+    $response->assertRedirect(route('home'));
+    $this->assertGuest();
+});

@@ -13,6 +13,7 @@ Route::post('/login', [SessionsController::class, 'store'])->name('login.store')
 
 Route::prefix('auth')->middleware(['auth', 'throttle:30,1'])->group(function (): void {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::post('/logout', [SessionsController::class, 'destroy'])->name('auth.logout');
 
     Route::prefix('project')->group(function (): void {
         Route::get('/', [ProjectController::class, 'indexAuth'])->name('auth.project.index');
@@ -45,5 +46,3 @@ Route::prefix('auth')->middleware(['auth', 'throttle:30,1'])->group(function ():
         Route::delete('/{blog}/delete', [BlogController::class, 'destroy'])->name('auth.blog.delete');
     });
 });
-
-// settings or changing passsword

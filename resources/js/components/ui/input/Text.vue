@@ -6,6 +6,7 @@ withDefaults(
         label?: string;
         placeholder: string;
         type?: string;
+        autocomplete?: string;
         hint?: string;
         error?: string;
         maxlength?: number;
@@ -33,6 +34,7 @@ defineEmits<{
         <input
             :id="id"
             :type="type"
+            :autocomplete="autocomplete"
             :placeholder="placeholder"
             :name="name"
             :required="required"
