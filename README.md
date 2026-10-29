@@ -3,11 +3,6 @@
 A personal portfolio for showcasing projects, articles, and
 making it easy to get in touch.
 
-## Portfolio walkthrough
-
-<video controls width="100%" src="public/videos/portfolio-demo.mp4">
-  Your browser does not support embedded videos. <a href="public/videos/portfolio-demo.mp4">Watch the portfolio walkthrough</a>.
-</video>
 
 ## What you can explore
 
@@ -17,6 +12,20 @@ making it easy to get in touch.
 - **Contact page** for getting in touch.
 - **Private dashboard** for managing projects, blog posts, and tags.
 - **Account settings** for changing the sign-in email and password.
+
+## Screenshots
+
+<div align="center">
+  <img src="public/screenshots/home.png" width="900" alt="Home page" />
+  <img src="public/screenshots/aboutme.png" width="900" alt="About me page" />
+  <img src="public/screenshots/projects.png" width="900" alt="Projects page" />
+  <img src="public/screenshots/project-show.png" width="900" alt="Project details page" />
+  <img src="public/screenshots/blog.png" width="900" alt="Blog page" />
+  <img src="public/screenshots/blog-show.png" width="900" alt="Blog post page" />
+  <img src="public/screenshots/contact.png" width="900" alt="Contact page" />
+  <img src="public/screenshots/login.png" width="900" alt="Login page" />
+  <img src="public/screenshots/Loading.png" width="900" alt="Loading state" />
+</div>
 
 ## Built with
 
@@ -54,34 +63,14 @@ Configure your database in `.env` before running the migrations. For a local
 SQLite setup, make sure `database/database.sqlite` exists and keep
 `DB_CONNECTION=sqlite`.
 
-Run these commands in separate terminals:
+Run these commands:
 
 ```bash
-php artisan serve
+php artisan dev
 ```
-
-```bash
-npm run dev
-```
+it wil run both php artisan serve and npm run dev
 
 Open the local URL printed by Artisan to explore the portfolio.
 
-## Production build
 
-```bash
-npm run build
-```
 
-Set production environment variables and database credentials in your hosting
-provider. Run database migrations during deployment:
-
-```bash
-php artisan migrate --force
-```
-
-## Video setup
-
-Record a short walkthrough of the home page, projects, project details, blog,
-and contact page. Save the MP4 as `public/videos/portfolio-demo.mp4` (create the
-`videos` folder if needed). If you host the video elsewhere, update the
-`src` in the video element above to its direct MP4 URL.
